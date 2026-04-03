@@ -617,53 +617,55 @@
 
       <div class="form-card">
         <div class="form-title">Enrollment Form</div>
-        <div class="form-group">
-          <label>Full Name *</label>
-          <input type="text" id="reg-name" placeholder="Your full name">
-        </div>
-        <div class="form-group">
-          <label>Phone Number *</label>
-          <input type="tel" id="reg-phone" placeholder="10-digit mobile number">
-        </div>
-        <div class="form-group">
-          <label>Email Address *</label>
-          <input type="email" id="reg-email" placeholder="your@email.com">
-        </div>
-        <div class="form-group">
-          <label>Course Interested In *</label>
-          <select id="reg-course">
-            <option value="">-- Select Course --</option>
-            <option>AWS</option>
-            <option>DevOps</option>
-            <option>Linux</option>
-            <option>Azure</option>
-            <option>Oracle</option>
-            <option>SQL</option>
-            <option>Python</option>
-            <option>Java</option>
-            <option>.NET</option>
-            <option>VMware</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Preferred Batch Time</label>
-          <select id="reg-batch">
-            <option value="">-- Select Timing --</option>
-            <option>Morning (7 AM - 9 AM)</option>
-            <option>Afternoon (1 PM - 3 PM)</option>
-            <option>Evening (6 PM - 8 PM)</option>
-            <option>Weekend Batch</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message (Optional)</label>
-          <textarea id="reg-message" placeholder="Any specific questions or requirements..."></textarea>
-        </div>
-        <button class="btn-submit" onclick="submitRegistration()">Submit Registration</button>
-        <div class="success-msg" id="reg-success">✓ Registration received! Our team will contact you within 24 hours.</div>
-        <p style="font-size:11px;color:var(--gray-muted);margin-top:12px;text-align:center;">
-          * Your details will be sent directly to us via <a href="https://formspree.io" target="_blank" style="color:var(--gold);text-decoration:none;">Formspree</a>
-        </p>
+        <form action="https://formspree.io/f/xbdpapbk" method="POST">
+          <input type="hidden" name="_subject" value="New Enrollment - Imperial Tech Academy">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" name="name" placeholder="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" name="phone" placeholder="10-digit mobile number" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Course Interested In *</label>
+            <select name="course" required>
+              <option value="">-- Select Course --</option>
+              <option>AWS</option>
+              <option>DevOps</option>
+              <option>Linux</option>
+              <option>Azure</option>
+              <option>Oracle</option>
+              <option>SQL</option>
+              <option>Python</option>
+              <option>Java</option>
+              <option>.NET</option>
+              <option>VMware</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Batch Time</label>
+            <select name="batch">
+              <option value="">-- Select Timing --</option>
+              <option>Morning (7 AM - 9 AM)</option>
+              <option>Afternoon (1 PM - 3 PM)</option>
+              <option>Evening (6 PM - 8 PM)</option>
+              <option>Weekend Batch</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message (Optional)</label>
+            <textarea name="message" placeholder="Any specific questions or requirements..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Submit Registration</button>
+          <p style="font-size:11px;color:var(--gray-muted);margin-top:12px;text-align:center;">
+            * Your details will be sent directly to us via <a href="https://formspree.io" target="_blank" style="color:var(--gold);text-decoration:none;">Formspree</a>
+          </p>
+        </form>
       </div>
     </div>
   </div>
@@ -826,3 +828,4 @@ window.addEventListener('scroll', () => {
   const sections = document.querySelectorAll('section[id]');
   sections.forEach(sec => {
     const top = sec.offsetTop - 80;
+  
