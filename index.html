@@ -775,6 +775,10 @@ function submitRegistration() {
   // Using Formspree — replace xbdpapbk below after creating account at formspree.io
   const FORMSPREE_ID = 'xbdpapbk';
 
+  const btn = document.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
   fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -782,8 +786,11 @@ function submitRegistration() {
       name, phone, email, course, batch, message,
       _subject: `New Enrollment: ${name} - ${course}`
     })
-  }).then(r => {
-    if (r.ok) {
+  }).then(r => r.json().then(data => ({ ok: r.ok, data })))
+  .then(({ ok, data }) => {
+    btn.disabled = false;
+    btn.textContent = 'Submit Registration';
+    if (ok) {
       document.getElementById('reg-name').value = '';
       document.getElementById('reg-phone').value = '';
       document.getElementById('reg-email').value = '';
@@ -794,10 +801,13 @@ function submitRegistration() {
       msg.style.display = 'block';
       setTimeout(() => msg.style.display = 'none', 5000);
     } else {
-      alert('Submission failed. Please call us directly at 8096255324');
+      const errMsg = data && data.error ? data.error : 'Submission failed';
+      alert(errMsg + '\nPlease call us directly at 8096255324');
     }
-  }).catch(() => {
-    alert('Network error. Please call us directly at 8096255324');
+  }).catch(err => {
+    btn.disabled = false;
+    btn.textContent = 'Submit Registration';
+    alert('Network error: ' + err.message + '\nPlease call us directly at 8096255324');
   });
 }
 
@@ -816,4 +826,3 @@ window.addEventListener('scroll', () => {
   const sections = document.querySelectorAll('section[id]');
   sections.forEach(sec => {
     const top = sec.offsetTop - 80;
-  
