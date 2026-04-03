@@ -761,57 +761,7 @@ window.addEventListener('load', () => {
   saved.forEach(fb => addFeedbackToDOM(fb, false));
 });
 
-// Submit Registration via Formspree
-function submitRegistration() {
-  const name = document.getElementById('reg-name').value.trim();
-  const phone = document.getElementById('reg-phone').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const course = document.getElementById('reg-course').value;
-  if (!name || !phone || !email || !course) {
-    alert('Please fill in all required fields (*)');
-    return;
-  }
-  const batch = document.getElementById('reg-batch').value;
-  const message = document.getElementById('reg-message').value.trim();
 
-  // Using Formspree — replace xbdpapbk below after creating account at formspree.io
-  const FORMSPREE_ID = 'xbdpapbk';
-
-  const btn = document.querySelector('.btn-submit');
-  btn.disabled = true;
-  btn.textContent = 'Submitting...';
-
-  fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({
-      name, phone, email, course, batch, message,
-      _subject: `New Enrollment: ${name} - ${course}`
-    })
-  }).then(r => r.json().then(data => ({ ok: r.ok, data })))
-  .then(({ ok, data }) => {
-    btn.disabled = false;
-    btn.textContent = 'Submit Registration';
-    if (ok) {
-      document.getElementById('reg-name').value = '';
-      document.getElementById('reg-phone').value = '';
-      document.getElementById('reg-email').value = '';
-      document.getElementById('reg-course').value = '';
-      document.getElementById('reg-batch').value = '';
-      document.getElementById('reg-message').value = '';
-      const msg = document.getElementById('reg-success');
-      msg.style.display = 'block';
-      setTimeout(() => msg.style.display = 'none', 5000);
-    } else {
-      const errMsg = data && data.error ? data.error : 'Submission failed';
-      alert(errMsg + '\nPlease call us directly at 8096255324');
-    }
-  }).catch(err => {
-    btn.disabled = false;
-    btn.textContent = 'Submit Registration';
-    alert('Network error: ' + err.message + '\nPlease call us directly at 8096255324');
-  });
-}
 
 // Mobile nav toggle
 function toggleNav() {
