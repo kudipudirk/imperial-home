@@ -1,94 +1,829 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imperial Tech Academy</title>
-  <style>
-    body {font-family: Arial, sans-serif; margin:0; background:#f5f5f5;}
-    header {background:#0b3d91; color:white; padding:20px; text-align:center;}
-    .container {max-width:900px; margin:auto; background:white; padding:20px;}
-    h1 {margin:0;}
-    form {display:grid; gap:10px;}
-    input, select, textarea {padding:10px; font-size:14px; width:100%;}
-    button {padding:12px; background:#0b3d91; color:white; border:none; cursor:pointer;}
-    button:hover {background:#072a63;}
-    footer {text-align:center; padding:15px; font-size:12px; color:#555;}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imperial Tech Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:wght@300;400;600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --navy: #0D1B2A;
+    --navy-mid: #162032;
+    --navy-light: #1E2F45;
+    --navy-card: #172338;
+    --white: #F5F0E8;
+    --white-pure: #FFFFFF;
+    --gray-muted: #8A9BB0;
+    --red-accent: #B22222;
+    --success: #2E7D32;
+    --border: rgba(201,168,76,0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 999;
+    background: rgba(13,27,42,0.97);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 70px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 14px; }
+  .nav-logo img { height: 44px; }
+  .nav-brand { font-family: 'Playfair Display', serif; }
+  .nav-brand span:first-child { display: block; font-size: 16px; color: var(--white-pure); letter-spacing: 2px; }
+  .nav-brand span:last-child { display: block; font-size: 10px; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray-muted); text-decoration: none; font-size: 13px;
+    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--gold);
+    color: var(--gold); padding: 8px 22px; font-family: 'Barlow', sans-serif;
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+    display: inline-block;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); padding: 6px 20px;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2.5rem;
+  }
+  .hero-badge::before, .hero-badge::after { content: '◆'; font-size: 7px; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white-pure);
+    margin-bottom: 0.3rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-tagline {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--gray-muted); letter-spacing: 2px;
+    margin-bottom: 1.5rem; font-style: italic;
+  }
+  .hero-desc {
+    max-width: 580px; font-size: 15px; line-height: 1.8;
+    color: #7A8FA8; margin-bottom: 3rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    padding: 14px 36px; font-family: 'Barlow', sans-serif;
+    font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; border: none; cursor: pointer;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(245,240,232,0.3);
+    padding: 14px 36px; font-family: 'Barlow', sans-serif;
+    font-size: 12px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-divider {
+    width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 3rem auto 0;
+  }
+
+  /* STATS */
+  .stats-bar {
+    background: var(--navy-card);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 2rem;
+    display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+  }
+  .stat-item {
+    text-align: center; padding: 0.5rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: var(--gold); display: block;
+  }
+  .stat-label { font-size: 11px; letter-spacing: 2px; color: var(--gray-muted); text-transform: uppercase; }
+
+  /* SECTION COMMON */
+  section { padding: 5rem 2rem; }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-tag {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--white-pure); line-height: 1.2;
+  }
+  .section-line {
+    width: 60px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 1.5rem auto 0;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* COURSES */
+  #courses { background: var(--navy-mid); }
+  .courses-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px; background: var(--border);
+  }
+  .course-card {
+    background: var(--navy-card); padding: 2rem 1.5rem;
+    border: 1px solid transparent;
+    transition: all 0.3s; cursor: default; position: relative; overflow: hidden;
+  }
+  .course-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--gold);
+    transition: width 0.4s;
+  }
+  .course-card:hover { border-color: var(--border); background: var(--navy-light); }
+  .course-card:hover::before { width: 100%; }
+  .course-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .course-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--white-pure); margin-bottom: 0.5rem;
+  }
+  .course-desc { font-size: 13px; color: var(--gray-muted); line-height: 1.6; }
+  .course-badge {
+    display: inline-block; margin-top: 1rem;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--border); padding: 3px 10px;
+  }
+
+  /* WHY US */
+  #why { background: var(--navy); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+  }
+  .why-card {
+    padding: 2rem; border-left: 2px solid var(--gold);
+    background: rgba(201,168,76,0.03);
+  }
+  .why-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; color: rgba(201,168,76,0.15); line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .why-title { font-size: 15px; font-weight: 600; color: var(--white-pure); margin-bottom: 0.5rem; }
+  .why-text { font-size: 13px; color: var(--gray-muted); line-height: 1.7; }
+
+  /* FEEDBACK SECTION */
+  #feedback { background: var(--navy-mid); }
+  .feedback-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: start;
+  }
+  @media(max-width:768px){ .feedback-layout { grid-template-columns: 1fr; gap: 2rem; } }
+
+  /* FEEDBACK FORM */
+  .form-card {
+    background: var(--navy-card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+  }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: var(--white-pure); margin-bottom: 1.5rem;
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--white); padding: 10px 14px;
+    font-family: 'Barlow', sans-serif; font-size: 14px;
+    outline: none; transition: border-color 0.3s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-group select option { background: var(--navy-card); color: var(--white); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .stars-row { display: flex; gap: 8px; }
+  .star {
+    font-size: 1.6rem; cursor: pointer; color: rgba(201,168,76,0.3);
+    transition: color 0.2s; user-select: none;
+  }
+  .star.active, .star:hover { color: var(--gold); }
+  .btn-submit {
+    width: 100%; background: var(--gold); color: var(--navy);
+    border: none; padding: 13px; font-family: 'Barlow', sans-serif;
+    font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+    margin-top: 0.5rem;
+  }
+  .btn-submit:hover { background: var(--gold-light); }
+  .success-msg {
+    display: none; background: rgba(46,125,50,0.15);
+    border: 1px solid rgba(46,125,50,0.4); color: #81C784;
+    padding: 12px; font-size: 13px; text-align: center; margin-top: 1rem;
+  }
+
+  /* FEEDBACK DISPLAY */
+  .feedback-display-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: var(--white-pure); margin-bottom: 1.5rem;
+  }
+  .feedback-list { display: flex; flex-direction: column; gap: 1rem; }
+  .feedback-item {
+    background: var(--navy-card); border: 1px solid var(--border);
+    padding: 1.4rem; position: relative; animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .fb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .fb-name { font-weight: 600; font-size: 14px; color: var(--white-pure); }
+  .fb-stars { color: var(--gold); font-size: 13px; }
+  .fb-course {
+    font-size: 11px; color: var(--gold); letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .fb-text { font-size: 13px; color: var(--gray-muted); line-height: 1.6; font-style: italic; }
+  .fb-date { font-size: 11px; color: rgba(138,155,176,0.5); margin-top: 0.5rem; }
+  .no-feedback { color: var(--gray-muted); font-size: 14px; font-style: italic; }
+
+  /* REGISTER SECTION */
+  #register { background: var(--navy); }
+  .register-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+  @media(max-width:768px){ .register-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  .register-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; color: var(--white-pure); margin-bottom: 1rem;
+  }
+  .register-info p { font-size: 14px; color: var(--gray-muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .contact-detail {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1rem; font-size: 14px;
+  }
+  .contact-icon { font-size: 1.1rem; color: var(--gold); width: 24px; text-align: center; }
+  .contact-val { color: var(--white); }
+  .contact-val a { color: var(--gold); text-decoration: none; }
+  .contact-val a:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy-card);
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 2.5rem 2rem;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-size: 11px; letter-spacing: 3px; color: var(--gray-muted);
+    text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .footer-links a { color: var(--gray-muted); text-decoration: none; font-size: 12px; letter-spacing: 1px; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 12px; color: rgba(138,155,176,0.4); }
+
+  /* MOBILE NAV */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--gold); }
+  @media(max-width:768px){
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    nav { padding: 0 1.5rem; }
+    .stats-bar .stat-item { padding: 0.5rem 1.5rem; }
+    .hero h1 { font-size: 2.4rem; }
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Imperial Tech Academy</h1>
-  <p>Cloud | DevOps | Linux | Terraform Training</p>
-</header>
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="Imperial Tech Academy Logo" onerror="this.style.display='none'">
+    <div class="nav-brand">
+      <span>Imperial Tech Academy</span>
+      <span>Ad Astra Per Aspera</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#feedback">Feedback</a></li>
+    <li><a href="#register">Register</a></li>
+  </ul>
+  <a href="#register" class="nav-cta">Enroll Now</a>
+  <div class="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-<div class="container">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Excellence in Technology Education</div>
+  <h1>Imperial<br><span>Tech Academy</span></h1>
+  <p class="hero-tagline">Ad Astra Per Aspera — Through Hardship to the Stars</p>
+  <p class="hero-desc">
+    Master the technologies that power the world's infrastructure. From Cloud to DevOps, from Databases to Programming — we forge industry-ready professionals.
+  </p>
+  <div class="hero-btns">
+    <a href="#register" class="btn-primary">Start Your Journey</a>
+    <a href="#courses" class="btn-outline">Explore Courses</a>
+  </div>
+  <div class="hero-divider"></div>
+</section>
 
-<h2>Student Enrollment Form</h2>
-
-<form id="enrollForm">
-  <input type="text" name="name" placeholder="Full Name" required>
-  <input type="tel" name="phone" placeholder="Phone Number" required>
-  <input type="email" name="email" placeholder="Email Address" required>
-
-  <select name="course" required>
-    <option value="">Select Course</option>
-    <option>DevOps</option>
-    <option>AWS Cloud</option>
-    <option>Linux Administration</option>
-    <option>Terraform</option>
-  </select>
-
-  <select name="batch">
-    <option value="">Preferred Batch</option>
-    <option>Morning</option>
-    <option>Evening</option>
-    <option>Weekend</option>
-  </select>
-
-  <textarea name="message" placeholder="Message"></textarea>
-
-  <button type="submit">Submit Enrollment</button>
-</form>
-
-<p id="status"></p>
-
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">10+</span>
+    <span class="stat-label">Courses Offered</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Practical Training</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">Expert</span>
+    <span class="stat-label">Industry Trainers</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">Live</span>
+    <span class="stat-label">Project Experience</span>
+  </div>
 </div>
 
+<!-- COURSES -->
+<section id="courses">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">What We Teach</span>
+      <h2 class="section-title">Our Technology Courses</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <span class="course-icon">☁️</span>
+        <div class="course-name">AWS</div>
+        <div class="course-desc">Amazon Web Services — Cloud architecture, EC2, S3, Lambda, and more.</div>
+        <span class="course-badge">Cloud</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">⚙️</span>
+        <div class="course-name">DevOps</div>
+        <div class="course-desc">CI/CD pipelines, Docker, Kubernetes, Jenkins, Terraform automation.</div>
+        <span class="course-badge">Automation</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">🐧</span>
+        <div class="course-name">Linux</div>
+        <div class="course-desc">Shell scripting, system administration, networking, and security.</div>
+        <span class="course-badge">OS</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">🔷</span>
+        <div class="course-name">Azure</div>
+        <div class="course-desc">Microsoft Azure cloud — VMs, Active Directory, Azure DevOps.</div>
+        <span class="course-badge">Cloud</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">🏛️</span>
+        <div class="course-name">Oracle</div>
+        <div class="course-desc">Oracle DB, RAC, Data Guard, OCI infrastructure & administration.</div>
+        <span class="course-badge">Database</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">🗄️</span>
+        <div class="course-name">SQL</div>
+        <div class="course-desc">Structured Query Language — queries, stored procedures, optimization.</div>
+        <span class="course-badge">Database</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">🐍</span>
+        <div class="course-name">Python</div>
+        <div class="course-desc">Programming fundamentals to automation, scripting, and data handling.</div>
+        <span class="course-badge">Programming</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">☕</span>
+        <div class="course-name">Java</div>
+        <div class="course-desc">Core Java, OOPs, collections, Spring framework basics.</div>
+        <span class="course-badge">Programming</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">🔷</span>
+        <div class="course-name">.NET</div>
+        <div class="course-desc">C#, ASP.NET, MVC framework for enterprise application development.</div>
+        <span class="course-badge">Programming</span>
+      </div>
+      <div class="course-card">
+        <span class="course-icon">🖥️</span>
+        <div class="course-name">VMware</div>
+        <div class="course-desc">Virtualization, vSphere, vCenter, ESXi host management.</div>
+        <span class="course-badge">Infra</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Our Promise</span>
+      <h2 class="section-title">Why Choose Imperial?</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01</div>
+        <div class="why-title">Industry Expert Trainers</div>
+        <div class="why-text">Learn from professionals with real-world experience in top IT companies and cloud environments.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02</div>
+        <div class="why-title">100% Hands-On Training</div>
+        <div class="why-text">Every concept is reinforced with live labs, real projects, and practical exercises — no theory-only sessions.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03</div>
+        <div class="why-title">Placement Assistance</div>
+        <div class="why-text">Resume building, mock interviews, and direct placement support to help you land your dream role.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">04</div>
+        <div class="why-title">Flexible Batch Timings</div>
+        <div class="why-text">Morning, evening, and weekend batches available — study at a time that fits your schedule.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEEDBACK SECTION -->
+<section id="feedback">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Student Voices</span>
+      <h2 class="section-title">Feedback & Reviews</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="feedback-layout">
+      <!-- FEEDBACK FORM -->
+      <div>
+        <div class="form-card">
+          <div class="form-title">Share Your Experience</div>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="fb-name" placeholder="e.g. Ravi Kumar">
+          </div>
+          <div class="form-group">
+            <label>Course Taken</label>
+            <select id="fb-course">
+              <option value="">-- Select Course --</option>
+              <option>AWS</option>
+              <option>DevOps</option>
+              <option>Linux</option>
+              <option>Azure</option>
+              <option>Oracle</option>
+              <option>SQL</option>
+              <option>Python</option>
+              <option>Java</option>
+              <option>.NET</option>
+              <option>VMware</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="stars-row" id="stars">
+              <span class="star" data-val="1">★</span>
+              <span class="star" data-val="2">★</span>
+              <span class="star" data-val="3">★</span>
+              <span class="star" data-val="4">★</span>
+              <span class="star" data-val="5">★</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Your Feedback</label>
+            <textarea id="fb-text" placeholder="Tell us about your learning experience..."></textarea>
+          </div>
+          <button class="btn-submit" onclick="submitFeedback()">Submit Feedback</button>
+          <div class="success-msg" id="fb-success">✓ Thank you! Your feedback has been published.</div>
+        </div>
+      </div>
+
+      <!-- FEEDBACK DISPLAY -->
+      <div>
+        <div class="feedback-display-title">What Our Students Say</div>
+        <div class="feedback-list" id="feedback-list">
+          <!-- Pre-loaded sample feedbacks -->
+          <div class="feedback-item">
+            <div class="fb-header">
+              <span class="fb-name">Suresh Reddy</span>
+              <span class="fb-stars">★★★★★</span>
+            </div>
+            <div class="fb-course">AWS</div>
+            <div class="fb-text">"The AWS training was exceptional. Real-world scenarios and hands-on labs made everything crystal clear. Got placed within a month!"</div>
+            <div class="fb-date">March 2025</div>
+          </div>
+          <div class="feedback-item">
+            <div class="fb-header">
+              <span class="fb-name">Priya Lakshmi</span>
+              <span class="fb-stars">★★★★★</span>
+            </div>
+            <div class="fb-course">DevOps</div>
+            <div class="fb-text">"Best DevOps course in the city. The trainer's industry knowledge is incredible. Highly recommended for anyone serious about their career."</div>
+            <div class="fb-date">February 2025</div>
+          </div>
+          <div class="feedback-item">
+            <div class="fb-header">
+              <span class="fb-name">Venkat Rao</span>
+              <span class="fb-stars">★★★★☆</span>
+            </div>
+            <div class="fb-course">Oracle</div>
+            <div class="fb-text">"Very thorough Oracle DBA course. Covered RAC, Data Guard, and OCI in great depth. Would have loved more weekend batches."</div>
+            <div class="fb-date">January 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER SECTION -->
+<section id="register">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Begin Your Journey</span>
+      <h2 class="section-title">Register Your Interest</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="register-grid">
+      <div class="register-info">
+        <h3>Ready to Transform Your Career?</h3>
+        <p>Fill in your details and our team will reach out to you with batch schedules, course fees, and enrollment guidance.</p>
+        <div class="contact-detail">
+          <span class="contact-icon">📞</span>
+          <span class="contact-val"><a href="tel:8096255324">8096255324</a></span>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-icon">✉️</span>
+          <span class="contact-val"><a href="mailto:kudipudirk@gmail.com">kudipudirk@gmail.com</a></span>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-icon">📍</span>
+          <span class="contact-val">Kurnool, Andhra Pradesh</span>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-title">Enrollment Form</div>
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="reg-name" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="reg-phone" placeholder="10-digit mobile number">
+        </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="reg-email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Course Interested In *</label>
+          <select id="reg-course">
+            <option value="">-- Select Course --</option>
+            <option>AWS</option>
+            <option>DevOps</option>
+            <option>Linux</option>
+            <option>Azure</option>
+            <option>Oracle</option>
+            <option>SQL</option>
+            <option>Python</option>
+            <option>Java</option>
+            <option>.NET</option>
+            <option>VMware</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Preferred Batch Time</label>
+          <select id="reg-batch">
+            <option value="">-- Select Timing --</option>
+            <option>Morning (7 AM - 9 AM)</option>
+            <option>Afternoon (1 PM - 3 PM)</option>
+            <option>Evening (6 PM - 8 PM)</option>
+            <option>Weekend Batch</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message (Optional)</label>
+          <textarea id="reg-message" placeholder="Any specific questions or requirements..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitRegistration()">Submit Registration</button>
+        <div class="success-msg" id="reg-success">✓ Registration received! Our team will contact you within 24 hours.</div>
+        <p style="font-size:11px;color:var(--gray-muted);margin-top:12px;text-align:center;">
+          * Your details will be sent directly to us via <a href="https://formspree.io" target="_blank" style="color:var(--gold);text-decoration:none;">Formspree</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  © 2026 Imperial Tech Academy
+  <div class="footer-logo">Imperial Tech Academy</div>
+  <div class="footer-tagline">Ad Astra Per Aspera — Kurnool, Andhra Pradesh</div>
+  <div class="footer-links">
+    <a href="#courses">Courses</a>
+    <a href="#why">Why Us</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#register">Register</a>
+    <a href="tel:8096255324">Call Us</a>
+    <a href="mailto:kudipudirk@gmail.com">Email Us</a>
+  </div>
+  <div class="footer-copy">© 2025 Imperial Tech Academy. All rights reserved.</div>
 </footer>
 
 <script>
-const form = document.getElementById("enrollForm");
-const status = document.getElementById("status");
+// Star Rating
+let selectedRating = 0;
+document.querySelectorAll('.star').forEach(star => {
+  star.addEventListener('mouseover', function() {
+    const val = +this.dataset.val;
+    document.querySelectorAll('.star').forEach(s => {
+      s.classList.toggle('active', +s.dataset.val <= val);
+    });
+  });
+  star.addEventListener('mouseout', function() {
+    document.querySelectorAll('.star').forEach(s => {
+      s.classList.toggle('active', +s.dataset.val <= selectedRating);
+    });
+  });
+  star.addEventListener('click', function() {
+    selectedRating = +this.dataset.val;
+    document.querySelectorAll('.star').forEach(s => {
+      s.classList.toggle('active', +s.dataset.val <= selectedRating);
+    });
+  });
+});
 
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
+// Submit Feedback (localStorage for persistence on GitHub Pages)
+function submitFeedback() {
+  const name = document.getElementById('fb-name').value.trim();
+  const course = document.getElementById('fb-course').value;
+  const text = document.getElementById('fb-text').value.trim();
+  if (!name || !course || !text || selectedRating === 0) {
+    alert('Please fill in all fields and give a rating.');
+    return;
+  }
+  const stars = '★'.repeat(selectedRating) + '☆'.repeat(5 - selectedRating);
+  const date = new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+  const feedbacks = JSON.parse(localStorage.getItem('imperialFeedbacks') || '[]');
+  feedbacks.unshift({ name, course, text, stars, date });
+  localStorage.setItem('imperialFeedbacks', JSON.stringify(feedbacks));
+  addFeedbackToDOM({ name, course, text, stars, date }, true);
+  document.getElementById('fb-name').value = '';
+  document.getElementById('fb-course').value = '';
+  document.getElementById('fb-text').value = '';
+  selectedRating = 0;
+  document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+  const msg = document.getElementById('fb-success');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 4000);
+}
 
-  const data = Object.fromEntries(new FormData(form).entries());
+function addFeedbackToDOM(fb, prepend) {
+  const list = document.getElementById('feedback-list');
+  const div = document.createElement('div');
+  div.className = 'feedback-item';
+  div.innerHTML = `
+    <div class="fb-header">
+      <span class="fb-name">${escapeHtml(fb.name)}</span>
+      <span class="fb-stars">${fb.stars}</span>
+    </div>
+    <div class="fb-course">${escapeHtml(fb.course)}</div>
+    <div class="fb-text">"${escapeHtml(fb.text)}"</div>
+    <div class="fb-date">${fb.date}</div>
+  `;
+  if (prepend) list.insertBefore(div, list.firstChild);
+  else list.appendChild(div);
+}
 
-  fetch("https://formspree.io/f/xbdpapbk", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if(response.ok){
-      status.innerText = "Enrollment submitted successfully!";
-      form.reset();
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Load saved feedbacks from localStorage
+window.addEventListener('load', () => {
+  const saved = JSON.parse(localStorage.getItem('imperialFeedbacks') || '[]');
+  saved.forEach(fb => addFeedbackToDOM(fb, false));
+});
+
+// Submit Registration via Formspree
+function submitRegistration() {
+  const name = document.getElementById('reg-name').value.trim();
+  const phone = document.getElementById('reg-phone').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const course = document.getElementById('reg-course').value;
+  if (!name || !phone || !email || !course) {
+    alert('Please fill in all required fields (*)');
+    return;
+  }
+  const batch = document.getElementById('reg-batch').value;
+  const message = document.getElementById('reg-message').value.trim();
+
+  // Using Formspree — replace YOUR_FORM_ID below after creating account at formspree.io
+  const FORMSPREE_ID = 'YOUR_FORM_ID';
+
+  fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      name, phone, email, course, batch, message,
+      _subject: `New Enrollment: ${name} - ${course}`
+    })
+  }).then(r => {
+    if (r.ok) {
+      document.getElementById('reg-name').value = '';
+      document.getElementById('reg-phone').value = '';
+      document.getElementById('reg-email').value = '';
+      document.getElementById('reg-course').value = '';
+      document.getElementById('reg-batch').value = '';
+      document.getElementById('reg-message').value = '';
+      const msg = document.getElementById('reg-success');
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 5000);
     } else {
-      status.innerText = "Error submitting form.";
+      alert('Submission failed. Please call us directly at 8096255324');
     }
-  })
-  .catch(() => status.innerText = "Network error.");
+  }).catch(() => {
+    alert('Network error. Please call us directly at 8096255324');
+  });
+}
+
+// Mobile nav toggle
+function toggleNav() {
+  const links = document.querySelector('.nav-links');
+  if (links.style.display === 'flex') {
+    links.style.display = 'none';
+  } else {
+    links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:rgba(13,27,42,0.98);padding:1.5rem 2rem;gap:1.5rem;border-bottom:1px solid rgba(201,168,76,0.25);z-index:998;';
+  }
+}
+
+// Smooth scroll nav active state
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('section[id]');
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 80;
+    const bottom = top + sec.offsetHeight;
+    if (scrollY >= top && scrollY < bottom) {
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + sec.id ? 'var(--gold)' : '';
+      });
+    }
+  });
 });
 </script>
-
 </body>
 </html>
