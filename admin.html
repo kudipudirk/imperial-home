@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Imperial Academy — Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f3ef;
+      --card: #ffffff;
+      --primary: #1a3c5e;
+      --accent: #c8963e;
+      --text: #1e1e1e;
+      --muted: #6b7280;
+      --border: #e2ddd6;
+      --input-bg: #faf9f7;
+      --success: #1e6b4a;
+      --danger: #c0392b;
+      --sidebar: #1a3c5e;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* ===== LOGIN SCREEN ===== */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: var(--bg);
+    }
+
+    .login-box {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 40px rgba(26,60,94,0.10);
+      text-align: center;
+    }
+
+    .login-icon {
+      width: 56px; height: 56px;
+      background: var(--primary);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .login-icon svg { width: 28px; height: 28px; fill: var(--accent); }
+
+    .login-box h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .login-box p { font-size: 13.5px; color: var(--muted); margin-bottom: 28px; }
+
+    .login-box input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      background: var(--input-bg);
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+
+    .login-box input:focus { border-color: var(--primary); }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .login-btn:hover { background: #15304f; }
+
+    .login-error {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--danger);
+      display: none;
+    }
+
+    /* ===== DASHBOARD ===== */
+    #dashboard { display: none; min-height: 100vh; }
+
+    /* Top Nav */
+    .topnav {
+      background: var(--primary);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .nav-brand span {
+      background: var(--accent);
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+
+    .nav-badge {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .logout-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* Main Content */
+    .main { padding: 32px; max-width: 1200px; margin: 0 auto; }
+
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .page-sub { font-size: 13.5px; color: var(--muted); margin-bottom: 28px; }
+
+    /* Summary Cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: box-shadow 0.2s;
+    }
+
+    .stat-card:hover { box-shadow: 0 4px 16px rgba(26,60,94,0.08); }
+
+    .stat-card.total {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .stat-card.total .stat-label { color: rgba(255,255,255,0.65); }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .stat-card.total .stat-number { color: #fff; }
+
+    .stat-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    /* Table Section */
+    .table-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .table-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .table-title {
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--primary);
+    }
+
+    .table-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .search-box {
+      padding: 8px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      background: var(--input-bg);
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus { border-color: var(--primary); }
+
+    .filter-select {
+      padding: 8px 32px 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      background: var(--input-bg);
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      cursor: pointer;
+    }
+
+    .refresh-btn {
+      padding: 8px 16px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .refresh-btn:hover { background: #15304f; }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead { background: #f8f6f2; }
+
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 16px;
+      border-bottom: 1px solid #f0ece6;
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #faf8f5; }
+
+    .sno {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .course-badge {
+      background: #e8f0f8;
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.3; }
+    .empty-state p { font-size: 15px; }
+
+    .loading-state {
+      text-align: center;
+      padding: 60px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .spinner-sm {
+      width: 22px; height: 22px;
+      border: 2.5px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .table-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      .main { padding: 16px; }
+      .topnav { padding: 0 16px; }
+      .search-box { width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <h2>Admin Login</h2>
+    <p>Imperial Academy — Dashboard Access</p>
+    <input type="password" id="passInput" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()"/>
+    <button class="login-btn" onclick="doLogin()">🔐 Login</button>
+    <p class="login-error" id="loginError">❌ Wrong password. Try again.</p>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard">
+  <nav class="topnav">
+    <div class="nav-brand">
+      <span>🎓</span> Imperial Academy
+    </div>
+    <div class="nav-right">
+      <span class="nav-badge" id="lastRefresh">—</span>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="page-title">Registrations Dashboard</div>
+    <div class="page-sub" id="pageSubText">Loading data from Google Sheet...</div>
+
+    <!-- Summary Cards -->
+    <div class="summary-grid" id="summaryGrid">
+      <div class="stat-card total">
+        <div class="stat-label">Total Registered</div>
+        <div class="stat-number" id="totalCount">—</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-section">
+      <div class="table-header">
+        <div class="table-title">All Registrations</div>
+        <div class="table-controls">
+          <input class="search-box" type="text" id="searchBox" placeholder="🔍 Search name, phone..." oninput="renderTable()"/>
+          <select class="filter-select" id="courseFilter" onchange="renderTable()">
+            <option value="">All Courses</option>
+          </select>
+          <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="loading-state" id="loadingState">
+          <span class="spinner-sm"></span> Fetching registrations...
+        </div>
+        <table id="dataTable" style="display:none">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Timestamp</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Date of Birth</th>
+              <th>Course</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <p>No registrations found.</p>
+        </div>
+      </div>
+
+      <div class="table-footer">
+        <span id="rowCount">—</span>
+        <span style="font-size:12px;">Data from Google Sheet · Auto-fetch on login</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== CONFIG =====
+  const ADMIN_PASSWORD = "Imperial@2025";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
+
+  let allData = [];
+
+  // ===== LOGIN =====
+  function doLogin() {
+    const pass = document.getElementById('passInput').value;
+    if (pass === ADMIN_PASSWORD) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadData();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('passInput').value = '';
+    }
+  }
+
+  function doLogout() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('passInput').value = '';
+    document.getElementById('loginError').style.display = 'none';
+    allData = [];
+  }
+
+  // ===== LOAD DATA =====
+  async function loadData() {
+    document.getElementById('loadingState').style.display = 'block';
+    document.getElementById('dataTable').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'none';
+
+    try {
+      const res = await fetch(SCRIPT_URL + "?action=getData&t=" + Date.now());
+      const json = await res.json();
+
+      allData = json.data || [];
+      const now = new Date().toLocaleTimeString('en-IN');
+      document.getElementById('lastRefresh').textContent = 'Refreshed ' + now;
+      document.getElementById('pageSubText').textContent =
+        allData.length + ' registration(s) found in Google Sheet';
+
+      buildSummary();
+      buildCourseFilter();
+      renderTable();
+
+    } catch(err) {
+      document.getElementById('loadingState').innerHTML =
+        '⚠️ Could not fetch data. Check Apps Script deployment.';
+    }
+  }
+
+  // ===== SUMMARY CARDS =====
+  function buildSummary() {
+    document.getElementById('totalCount').textContent = allData.length;
+
+    const courseCounts = {};
+    allData.forEach(row => {
+      const c = row[5] || 'Unknown';
+      courseCounts[c] = (courseCounts[c] || 0) + 1;
+    });
+
+    const grid = document.getElementById('summaryGrid');
+    // Remove old course cards
+    const existing = grid.querySelectorAll('.course-card');
+    existing.forEach(el => el.remove());
+
+    Object.entries(courseCounts).sort((a,b) => b[1]-a[1]).forEach(([course, count]) => {
+      const card = document.createElement('div');
+      card.className = 'stat-card course-card';
+      card.innerHTML = `
+        <div class="stat-label"><span class="stat-dot"></span>${course}</div>
+        <div class="stat-number" style="font-size:28px;color:var(--primary)">${count}</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // ===== COURSE FILTER =====
+  function buildCourseFilter() {
+    const sel = document.getElementById('courseFilter');
+    const courses = [...new Set(allData.map(r => r[5]).filter(Boolean))].sort();
+    sel.innerHTML = '<option value="">All Courses</option>';
+    courses.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      sel.appendChild(opt);
+    });
+  }
+
+  // ===== RENDER TABLE =====
+  function renderTable() {
+    const search = document.getElementById('searchBox').value.toLowerCase();
+    const course = document.getElementById('courseFilter').value;
+
+    let filtered = allData.filter(row => {
+      const matchSearch = !search ||
+        (row[1]||'').toLowerCase().includes(search) ||
+        (row[2]||'').toLowerCase().includes(search) ||
+        (row[3]||'').toLowerCase().includes(search);
+      const matchCourse = !course || row[5] === course;
+      return matchSearch && matchCourse;
+    });
+
+    document.getElementById('loadingState').style.display = 'none';
+
+    if (filtered.length === 0) {
+      document.getElementById('dataTable').style.display = 'none';
+      document.getElementById('emptyState').style.display = 'block';
+      document.getElementById('rowCount').textContent = '0 records';
+      return;
+    }
+
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('dataTable').style.display = 'table';
+
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+
+    filtered.forEach((row, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="sno">${i + 1}</td>
+        <td style="color:var(--muted);font-size:12.5px;white-space:nowrap">${row[0]||'—'}</td>
+        <td><strong>${row[1]||'—'}</strong></td>
+        <td>${row[2]||'—'}</td>
+        <td style="font-size:13px">${row[3]||'—'}</td>
+        <td style="font-size:13px;white-space:nowrap">${row[4]||'—'}</td>
+        <td><span class="course-badge">${row[5]||'—'}</span></td>
+        <td style="font-size:13px;max-width:180px">${row[6]||'—'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('rowCount').textContent =
+      filtered.length + ' of ' + allData.length + ' records';
+  }
+</script>
+</body>
+</html>
