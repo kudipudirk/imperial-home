@@ -246,6 +246,29 @@
     setTimeout(() => t.classList.remove('show'), 3500);
   }
 
+  function fmtDate(val) {
+    if (!val) return '—';
+    try {
+      const d = new Date(val);
+      if (isNaN(d)) return val;
+      return d.toLocaleString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    } catch { return val; }
+  }
+
+  function fmtDOB(val) {
+    if (!val) return '—';
+    try {
+      // Handle both ISO string and plain date string like "1996-07-29"
+      const str = String(val).split('T')[0].replace(/^\+0*/, '');
+      const parts = str.split('-');
+      if (parts.length === 3) {
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return `${parts[2]} ${months[parseInt(parts[1])-1]} ${parts[0]}`;
+      }
+      return val;
+    } catch { return val; }
+  }
+
   function doLogin() {
     if (document.getElementById('passInput').value === ADMIN_PASSWORD) {
       document.getElementById('loginScreen').style.display = 'none';
@@ -337,11 +360,11 @@
       const tr = document.createElement('tr');
       tr.innerHTML=`
         <td class="sno">${num+1}</td>
-        <td style="color:var(--muted);font-size:12px;white-space:nowrap">${row[0]||'—'}</td>
+        <td style="color:var(--muted);font-size:12px;white-space:nowrap">${fmtDate(row[0])}</td>
         <td><strong>${row[1]||'—'}</strong></td>
         <td>${row[2]||'—'}</td>
         <td style="font-size:12.5px">${row[3]||'—'}</td>
-        <td style="font-size:12.5px;white-space:nowrap">${row[4]||'—'}</td>
+        <td style="font-size:12.5px;white-space:nowrap">${fmtDOB(row[4])}</td>
         <td><span class="course-badge">${row[5]||'—'}</span></td>
         <td style="font-size:12.5px;max-width:150px">${row[6]||'—'}</td>
         <td>
