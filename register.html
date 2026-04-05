@@ -1,62 +1,89 @@
-function doPost(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Registration</title>
+</head>
 
-    // New Registration
-    if (!data.action) {
-      sheet.appendRow([
-        new Date().toLocaleString('en-IN'),
-        data.name        || '',
-        data.phone       || '',
-        data.email       || '',
-        data.dob         || '',
-        data.course      || '',
-        data.address     || '',
-        data.profileType || 'Student',   // col 8  — Student / Employee
-        data.companyName || '',           // col 9  — Company Name (Employee only)
-        data.domain      || '',           // col 10 — Domain
-        data.presentExp  || '',           // col 11 — Experience in Present Co.
-        'Pending'                          // col 12 — Payment Status
-      ]);
-      return ContentService
-        .createTextOutput(JSON.stringify({ status: "success" }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
+<body>
 
-    // Update Payment Status  ← column is now 12 (was 8)
-    if (data.action === 'updateStatus') {
-      sheet.getRange(data.rowIndex, 12).setValue(data.status);
-      return ContentService
-        .createTextOutput(JSON.stringify({ status: "success" }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
+<h2>Course Registration</h2>
 
-    // Delete Row
-    if (data.action === 'deleteRow') {
-      sheet.deleteRow(data.rowIndex);
-      return ContentService
-        .createTextOutput(JSON.stringify({ status: "success" }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
+<form id="registerForm">
 
-  } catch(err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
+Name<br>
+<input type="text" id="name" required><br><br>
 
-function doGet(e) {
-  if (e.parameter.action === "getData") {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var rows = sheet.getDataRange().getValues();
-    rows.shift(); // remove header row
-    return ContentService
-      .createTextOutput(JSON.stringify({ data: rows }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  return ContentService
-    .createTextOutput("Script is running!")
-    .setMimeType(ContentService.MimeType.TEXT);
-}
+Phone Number<br>
+<input type="text" id="phone" required><br><br>
+
+Email<br>
+<input type="email" id="email"><br><br>
+
+Date of Birth<br>
+<input type="date" id="dob"><br><br>
+
+Course Interested<br>
+<input type="text" id="course"><br><br>
+
+Address<br>
+<textarea id="address"></textarea><br><br>
+
+Profile Type<br>
+<select id="profileType">
+<option value="Student">Student</option>
+<option value="Employee">Employee</option>
+</select><br><br>
+
+Company Name<br>
+<input type="text" id="companyName"><br><br>
+
+Domain<br>
+<input type="text" id="domain"><br><br>
+
+Experience in Present Company<br>
+<input type="text" id="presentExp"><br><br>
+
+<button type="submit">Register</button>
+
+</form>
+
+<script>
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
+
+document.getElementById("registerForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const data = {
+name: document.getElementById("name").value,
+phone: document.getElementById("phone").value,
+email: document.getElementById("email").value,
+dob: document.getElementById("dob").value,
+course: document.getElementById("course").value,
+address: document.getElementById("address").value,
+profileType: document.getElementById("profileType").value,
+companyName: document.getElementById("companyName").value,
+domain: document.getElementById("domain").value,
+presentExp: document.getElementById("presentExp").value
+};
+
+fetch(scriptURL,{
+method:"POST",
+body:JSON.stringify(data)
+})
+.then(res=>res.json())
+.then(data=>{
+alert("Registration Successful");
+document.getElementById("registerForm").reset();
+})
+.catch(err=>{
+alert("Error submitting form");
+});
+
+});
+
+</script>
+
+</body>
+</html>
