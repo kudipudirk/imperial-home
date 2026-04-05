@@ -21,7 +21,7 @@
       border:1px solid var(--border); box-shadow:0 8px 40px rgba(26,60,94,0.10); text-align:center;
     }
     .login-icon { width:56px; height:56px; background:var(--primary); border-radius:14px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
-    .login-icon svg { width:28px; height:28px; fill:var(--accent); }
+    .login-icon svg { width:28px; height:28px; fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; }
     .login-box h2 { font-family:'DM Serif Display',serif; font-size:26px; color:var(--primary); margin-bottom:4px; }
     .login-box p { font-size:13.5px; color:var(--muted); margin-bottom:28px; }
     .login-box input {
@@ -38,13 +38,13 @@
     #dashboard { display:none; min-height:100vh; }
     .topnav { background:var(--primary); padding:0 32px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
     .nav-brand { display:flex; align-items:center; gap:10px; font-family:'DM Serif Display',serif; font-size:18px; color:#fff; }
-    .nav-brand span { background:var(--accent); width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; }
+    .nav-brand-icon { background:var(--accent); width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; }
     .nav-right { display:flex; align-items:center; gap:16px; }
     .nav-badge { background:rgba(255,255,255,0.12); color:#fff; font-size:12px; padding:4px 12px; border-radius:20px; }
     .logout-btn { background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 16px; border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; }
     .logout-btn:hover { background:rgba(255,255,255,0.2); }
 
-    .main { padding:32px; max-width:1300px; margin:0 auto; }
+    .main { padding:32px; max-width:1500px; margin:0 auto; }
     .page-title { font-family:'DM Serif Display',serif; font-size:26px; color:var(--primary); margin-bottom:6px; }
     .page-sub { font-size:13.5px; color:var(--muted); margin-bottom:28px; }
 
@@ -53,9 +53,9 @@
     .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; transition:box-shadow 0.2s; }
     .stat-card:hover { box-shadow:0 4px 16px rgba(26,60,94,0.08); }
     .stat-card.total { background:var(--primary); border-color:var(--primary); }
-    .stat-card.paid-card   { border-left:4px solid #1e6b4a; }
-    .stat-card.pending-card{ border-left:4px solid #c8963e; }
-    .stat-card.failed-card { border-left:4px solid var(--danger); }
+    .stat-card.paid-card    { border-left:4px solid #1e6b4a; }
+    .stat-card.pending-card { border-left:4px solid #c8963e; }
+    .stat-card.partial-card { border-left:4px solid #1d4ed8; }
     .stat-label { font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); margin-bottom:8px; }
     .stat-card.total .stat-label { color:rgba(255,255,255,0.65); }
     .stat-number { font-family:'DM Serif Display',serif; font-size:32px; color:var(--primary); line-height:1; }
@@ -79,14 +79,24 @@
     .refresh-btn { padding:8px 16px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; transition:background 0.2s; }
     .refresh-btn:hover { background:#15304f; }
     .table-wrap { overflow-x:auto; }
-    table { width:100%; border-collapse:collapse; font-size:13.5px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
     thead { background:#f8f6f2; }
-    th { padding:12px 14px; text-align:left; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); border-bottom:1px solid var(--border); white-space:nowrap; }
-    td { padding:12px 14px; border-bottom:1px solid #f0ece6; color:var(--text); vertical-align:middle; }
+    th { padding:11px 12px; text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); border-bottom:1px solid var(--border); white-space:nowrap; }
+    td { padding:11px 12px; border-bottom:1px solid #f0ece6; color:var(--text); vertical-align:middle; }
     tr:last-child td { border-bottom:none; }
     tr:hover td { background:#faf8f5; }
     .sno { color:var(--muted); font-size:12px; font-weight:600; }
-    .course-badge { background:#e8f0f8; color:var(--primary); padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; white-space:nowrap; }
+    .course-badge { background:#e8f0f8; color:var(--primary); padding:3px 9px; border-radius:20px; font-size:11.5px; font-weight:600; white-space:nowrap; }
+
+    /* Profile type badges */
+    .profile-badge { padding:3px 9px; border-radius:20px; font-size:11.5px; font-weight:600; white-space:nowrap; }
+    .profile-badge.student  { background:#f0faf4; color:#1e6b4a; }
+    .profile-badge.employee { background:#fff3e0; color:#b45309; }
+
+    /* Employee info cell */
+    .emp-info { font-size:12px; line-height:1.6; color:var(--text); }
+    .emp-info span { display:block; color:var(--muted); font-size:11px; }
+    .na-dash { color:#ccc; font-size:13px; }
 
     /* PAYMENT STATUS DROPDOWN */
     .status-select {
@@ -97,7 +107,7 @@
     }
     .status-select.Paid    { background-color:#d4edda; color:#1e6b4a; }
     .status-select.Pending { background-color:#fff3cd; color:#856404; }
-    .status-select.Failed  { background-color:#fde8e8; color:var(--danger); }
+    .status-select.Partial { background-color:#dbeafe; color:#1d4ed8; }
     .status-select:disabled { opacity:0.5; cursor:not-allowed; }
 
     /* DELETE BTN */
@@ -155,7 +165,9 @@
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
     </div>
     <h2>Admin Login</h2>
     <p>Imperial Academy — Dashboard Access</p>
@@ -168,7 +180,10 @@
 <!-- DASHBOARD -->
 <div id="dashboard">
   <nav class="topnav">
-    <div class="nav-brand"><span>🎓</span> Imperial Academy</div>
+    <div class="nav-brand">
+      <div class="nav-brand-icon">🎓</div>
+      Imperial Academy
+    </div>
     <div class="nav-right">
       <span class="nav-badge" id="lastRefresh">—</span>
       <button class="logout-btn" onclick="doLogout()">Logout</button>
@@ -192,9 +207,9 @@
         <div class="stat-label">⏳ Pending</div>
         <div class="stat-number" id="pendingCount" style="color:#856404">—</div>
       </div>
-      <div class="stat-card failed-card">
-        <div class="stat-label">❌ Failed</div>
-        <div class="stat-number" id="failedCount" style="color:var(--danger)">—</div>
+      <div class="stat-card partial-card">
+        <div class="stat-label">💳 Partial</div>
+        <div class="stat-number" id="partialCount" style="color:#1d4ed8">—</div>
       </div>
     </div>
 
@@ -204,9 +219,14 @@
         <div class="table-controls">
           <input class="search-box" type="text" id="searchBox" placeholder="🔍 Search..." oninput="renderTable()"/>
           <select class="filter-select" id="courseFilter" onchange="renderTable()"><option value="">All Courses</option></select>
+          <select class="filter-select" id="profileFilter" onchange="renderTable()">
+            <option value="">All Profiles</option>
+            <option>Student</option>
+            <option>Employee</option>
+          </select>
           <select class="filter-select" id="statusFilter" onchange="renderTable()">
             <option value="">All Status</option>
-            <option>Paid</option><option>Pending</option><option>Failed</option>
+            <option>Paid</option><option>Pending</option><option>Partial</option>
           </select>
           <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
         </div>
@@ -216,9 +236,18 @@
         <table id="dataTable" style="display:none">
           <thead>
             <tr>
-              <th>#</th><th>Timestamp</th><th>Name</th><th>Phone</th>
-              <th>Email</th><th>DOB</th><th>Course</th><th>Address</th>
-              <th>Payment Status</th><th>Action</th>
+              <th>#</th>
+              <th>Timestamp</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>DOB</th>
+              <th>Course</th>
+              <th>Address</th>
+              <th>Profile</th>
+              <th>Company / Domain / Exp</th>
+              <th>Payment</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -236,6 +265,20 @@
 <script>
   const ADMIN_PASSWORD = "Welcome@123";
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
+
+  // Google Sheet column mapping (0-indexed after timestamp):
+  // [0] Timestamp
+  // [1] Name
+  // [2] Phone
+  // [3] Email
+  // [4] DOB
+  // [5] Course
+  // [6] Address
+  // [7] Profile Type
+  // [8] Company Name
+  // [9] Domain
+  // [10] Experience
+  // [11] Payment Status
 
   let allData = [];
   let pendingDeleteIdx = null;
@@ -258,7 +301,6 @@
   function fmtDOB(val) {
     if (!val) return '—';
     try {
-      // Handle both ISO string and plain date string like "1996-07-29"
       const str = String(val).split('T')[0].replace(/^\+0*/, '');
       const parts = str.split('-');
       if (parts.length === 3) {
@@ -306,72 +348,91 @@
 
   function buildSummary() {
     document.getElementById('totalCount').textContent   = allData.length;
-    document.getElementById('paidCount').textContent    = allData.filter(r=>(r[7]||'Pending')==='Paid').length;
-    document.getElementById('pendingCount').textContent = allData.filter(r=>(r[7]||'Pending')==='Pending').length;
-    document.getElementById('failedCount').textContent  = allData.filter(r=>(r[7]||'Pending')==='Failed').length;
+    document.getElementById('paidCount').textContent    = allData.filter(r => (r[11]||'Pending') === 'Paid').length;
+    document.getElementById('pendingCount').textContent = allData.filter(r => (r[11]||'Pending') === 'Pending').length;
+    document.getElementById('partialCount').textContent = allData.filter(r => (r[11]||'Pending') === 'Partial').length;
 
+    // Course-wise stat cards
     const grid = document.getElementById('summaryGrid');
-    grid.querySelectorAll('.course-card').forEach(el=>el.remove());
+    grid.querySelectorAll('.course-card').forEach(el => el.remove());
     const cc = {};
-    allData.forEach(r=>{ const c=r[5]||'Unknown'; cc[c]=(cc[c]||0)+1; });
-    Object.entries(cc).sort((a,b)=>b[1]-a[1]).forEach(([course,count])=>{
+    allData.forEach(r => { const c = r[5]||'Unknown'; cc[c] = (cc[c]||0) + 1; });
+    Object.entries(cc).sort((a,b) => b[1]-a[1]).forEach(([course, count]) => {
       const card = document.createElement('div');
-      card.className='stat-card course-card';
-      card.innerHTML=`<div class="stat-label"><span class="stat-dot"></span>${course}</div><div class="stat-number" style="font-size:26px">${count}</div>`;
+      card.className = 'stat-card course-card';
+      card.innerHTML = `<div class="stat-label"><span class="stat-dot"></span>${course}</div><div class="stat-number" style="font-size:26px">${count}</div>`;
       grid.appendChild(card);
     });
   }
 
   function buildFilters() {
     const sel = document.getElementById('courseFilter');
-    const courses = [...new Set(allData.map(r=>r[5]).filter(Boolean))].sort();
+    const courses = [...new Set(allData.map(r => r[5]).filter(Boolean))].sort();
     sel.innerHTML = '<option value="">All Courses</option>';
-    courses.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; sel.appendChild(o); });
+    courses.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; sel.appendChild(o); });
   }
 
   function renderTable() {
-    const search = document.getElementById('searchBox').value.toLowerCase();
-    const course = document.getElementById('courseFilter').value;
-    const status = document.getElementById('statusFilter').value;
+    const search  = document.getElementById('searchBox').value.toLowerCase();
+    const course  = document.getElementById('courseFilter').value;
+    const profile = document.getElementById('profileFilter').value;
+    const status  = document.getElementById('statusFilter').value;
 
-    const filtered = allData.map((row,i)=>({row,i})).filter(({row})=>{
-      const ms = !search || [row[1],row[2],row[3]].some(v=>(v||'').toLowerCase().includes(search));
-      const mc = !course || row[5]===course;
-      const mst= !status || (row[7]||'Pending')===status;
-      return ms && mc && mst;
+    const filtered = allData.map((row, i) => ({row, i})).filter(({row}) => {
+      const ms  = !search  || [row[1], row[2], row[3], row[8]].some(v => (v||'').toLowerCase().includes(search));
+      const mc  = !course  || row[5] === course;
+      const mp  = !profile || (row[7]||'Student') === profile;
+      const mst = !status  || (row[11]||'Pending') === status;
+      return ms && mc && mp && mst;
     });
 
-    document.getElementById('loadingState').style.display='none';
+    document.getElementById('loadingState').style.display = 'none';
 
     if (!filtered.length) {
-      document.getElementById('dataTable').style.display='none';
-      document.getElementById('emptyState').style.display='block';
-      document.getElementById('rowCount').textContent='0 records'; return;
+      document.getElementById('dataTable').style.display = 'none';
+      document.getElementById('emptyState').style.display = 'block';
+      document.getElementById('rowCount').textContent = '0 records';
+      return;
     }
 
-    document.getElementById('emptyState').style.display='none';
-    document.getElementById('dataTable').style.display='table';
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('dataTable').style.display = 'table';
 
     const tbody = document.getElementById('tableBody');
-    tbody.innerHTML='';
+    tbody.innerHTML = '';
 
-    filtered.forEach(({row,i},num)=>{
-      const pay = row[7]||'Pending';
+    filtered.forEach(({row, i}, num) => {
+      const pay     = row[11] || 'Pending';
+      const profile = row[7]  || 'Student';
+      const isEmp   = profile === 'Employee';
+
+      const empCell = isEmp
+        ? `<div class="emp-info">
+            <strong>${row[8]||'—'}</strong>
+            <span>Domain: ${row[9]||'—'}</span>
+            <span>Exp: ${row[10]||'—'}</span>
+           </div>`
+        : `<span class="na-dash">—</span>`;
+
+      const profileBadge = `<span class="profile-badge ${profile.toLowerCase()}">${profile}</span>`;
+
       const tr = document.createElement('tr');
-      tr.innerHTML=`
+      tr.innerHTML = `
         <td class="sno">${num+1}</td>
         <td style="color:var(--muted);font-size:12px;white-space:nowrap">${fmtDate(row[0])}</td>
         <td><strong>${row[1]||'—'}</strong></td>
         <td>${row[2]||'—'}</td>
-        <td style="font-size:12.5px">${row[3]||'—'}</td>
-        <td style="font-size:12.5px;white-space:nowrap">${fmtDOB(row[4])}</td>
+        <td style="font-size:12px">${row[3]||'—'}</td>
+        <td style="font-size:12px;white-space:nowrap">${fmtDOB(row[4])}</td>
         <td><span class="course-badge">${row[5]||'—'}</span></td>
-        <td style="font-size:12.5px;max-width:150px">${row[6]||'—'}</td>
+        <td style="font-size:12px;max-width:130px">${row[6]||'—'}</td>
+        <td>${profileBadge}</td>
+        <td>${empCell}</td>
         <td>
           <select class="status-select ${pay}" onchange="changeStatus(this,${i})">
-            <option ${pay==='Paid'?'selected':''}>Paid</option>
-            <option ${pay==='Pending'?'selected':''}>Pending</option>
-            <option ${pay==='Failed'?'selected':''}>Failed</option>
+            <option ${pay==='Paid'    ?'selected':''}>Paid</option>
+            <option ${pay==='Pending' ?'selected':''}>Pending</option>
+            <option ${pay==='Partial' ?'selected':''}>Partial</option>
           </select>
         </td>
         <td><button class="del-btn" onclick="askDelete(${i},'${(row[1]||'').replace(/'/g,"\\'")}')">🗑 Delete</button></td>`;
@@ -385,12 +446,12 @@
     const newStatus = el.value;
     el.className = 'status-select ' + newStatus;
     el.disabled = true;
-    allData[idx][7] = newStatus;
+    allData[idx][11] = newStatus;
     try {
       await fetch(SCRIPT_URL, {
-        method:'POST', mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ action:'updateStatus', rowIndex: idx+2, status: newStatus })
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ action: 'updateStatus', rowIndex: idx+2, status: newStatus })
       });
       showToast('✅ Payment status updated to ' + newStatus, 'success');
       buildSummary();
@@ -415,9 +476,9 @@
     if (idx === null) return;
     try {
       await fetch(SCRIPT_URL, {
-        method:'POST', mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ action:'deleteRow', rowIndex: idx+2 })
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ action: 'deleteRow', rowIndex: idx+2 })
       });
       allData.splice(idx, 1);
       buildSummary(); buildFilters(); renderTable();
