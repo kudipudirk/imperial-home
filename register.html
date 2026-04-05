@@ -1,81 +1,557 @@
-<script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Imperial Academy — Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-function showToast(msg, isError = false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (isError ? ' error' : '');
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
-}
-
-document.getElementById('regForm').addEventListener('submit', async function(e) {
-
-  e.preventDefault();
-
-  const name    = document.getElementById('name').value.trim();
-  const phone   = document.getElementById('phone').value.trim();
-  const dob     = document.getElementById('dob').value;
-  const email   = document.getElementById('email').value.trim();
-  const course  = document.getElementById('course').value;
-  const address = document.getElementById('address').value.trim();
-
-  if (!name || !phone || !dob || !email || !course || !address) {
-    showToast('⚠️ Please fill in all required fields.', true);
-    return;
-  }
-
-  if (!/^[6-9]\d{9}$/.test(phone)) {
-    showToast('⚠️ Enter a valid 10-digit phone number.', true);
-    return;
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    showToast('⚠️ Enter a valid email address.', true);
-    return;
-  }
-
-  const btn     = document.getElementById('submitBtn');
-  const btnText = document.getElementById('btnText');
-  const spinner = document.getElementById('spinner');
-
-  btn.disabled = true;
-  btnText.textContent = 'Submitting...';
-  spinner.style.display = 'block';
-
-  try {
-
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        phone,
-        email,
-        dob,
-        course,
-        address
-      })
-    });
-
-    const result = await response.json();
-
-    if(result.status === "success"){
-      showToast("✅ Registration successful! We will contact you soon.");
-      document.getElementById("regForm").reset();
-    }else{
-      showToast("❌ Error submitting form.", true);
+    :root {
+      --bg: #f5f3ef;
+      --card: #ffffff;
+      --primary: #1a3c5e;
+      --accent: #c8963e;
+      --text: #1e1e1e;
+      --muted: #6b7280;
+      --border: #e2ddd6;
+      --input-bg: #faf9f7;
+      --error: #c0392b;
+      --success: #1e6b4a;
     }
 
-  } catch (error) {
-    showToast("❌ Network error. Please try again.", true);
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .logo-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--primary);
+      letter-spacing: 0.3px;
+    }
+
+    .header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 30px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 40px 40px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 32px rgba(26,60,94,0.07);
+    }
+
+    /* Section divider inside form */
+    .section-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 15px;
+      color: var(--primary);
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      margin-top: 28px;
+      letter-spacing: 0.2px;
+    }
+    .section-label:first-of-type { margin-top: 0; }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 7px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    label span.req {
+      color: var(--accent);
+      margin-left: 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--input-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,60,94,0.08);
+      background: #fff;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #b0aaa0;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+
+    select option[value=""] { color: #b0aaa0; }
+
+    textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+
+    /* Two column row */
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Profile type toggle */
+    .profile-toggle {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    .profile-option {
+      flex: 1;
+      position: relative;
+    }
+
+    .profile-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .profile-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--input-bg);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      margin-bottom: 0;
+    }
+
+    .profile-option input[type="radio"]:checked + label {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(26,60,94,0.18);
+    }
+
+    .profile-option label svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Employee section slide animation */
+    .employee-fields {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+    }
+    .employee-fields.visible {
+      max-height: 600px;
+      opacity: 1;
+    }
+
+    /* Payment status badge select */
+    #paymentStatus option[value="Paid"]    { color: #1e6b4a; }
+    #paymentStatus option[value="Pending"] { color: #b45309; }
+    #paymentStatus option[value="Partial"] { color: #1d4ed8; }
+
+    /* Submit button */
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover { background: #15304f; }
+    .btn:active { transform: scale(0.99); }
+    .btn:disabled { background: #93a8be; cursor: not-allowed; }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: var(--success);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.error { background: var(--error); }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 520px) {
+      .card { padding: 28px 20px; }
+      .row-2 { grid-template-columns: 1fr; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="wrapper">
+  <div class="header">
+    <div class="logo-line">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <span class="brand">Imperial Academy</span>
+    </div>
+    <h1>Course Registration</h1>
+    <p>Fill in your details below to register for a course</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="card">
+    <form id="regForm" novalidate>
+
+      <!-- SECTION 1: Personal Info -->
+      <p class="section-label">Personal Information</p>
+
+      <div class="form-group">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="Enter your full name" required />
+      </div>
+
+      <div class="row-2">
+        <div class="form-group">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="10-digit mobile number" maxlength="10" required />
+        </div>
+        <div class="form-group">
+          <label>Date of Birth <span class="req">*</span></label>
+          <input type="date" id="dob" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="example@email.com" required />
+      </div>
+
+      <div class="form-group">
+        <label>Address <span class="req">*</span></label>
+        <textarea id="address" placeholder="Enter your full address"></textarea>
+      </div>
+
+      <!-- SECTION 2: Course Info -->
+      <p class="section-label">Course Details</p>
+
+      <div class="form-group">
+        <label>Course Interested <span class="req">*</span></label>
+        <select id="course" required>
+          <option value="">— Select a course —</option>
+          <option>Full Stack Web Development</option>
+          <option>Data Science & Analytics</option>
+          <option>Digital Marketing</option>
+          <option>Graphic Design</option>
+          <option>Business Management</option>
+          <option>Cloud Computing</option>
+          <option>Cybersecurity</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Payment Status <span class="req">*</span></label>
+        <select id="paymentStatus" required>
+          <option value="">— Select payment status —</option>
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+          <option value="Partial">Partial</option>
+        </select>
+      </div>
+
+      <!-- SECTION 3: Profile Type -->
+      <p class="section-label">Profile Type</p>
+
+      <div class="form-group">
+        <label>I am a <span class="req">*</span></label>
+        <div class="profile-toggle">
+          <div class="profile-option">
+            <input type="radio" name="profileType" id="typeStudent" value="Student" checked />
+            <label for="typeStudent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+              Student
+            </label>
+          </div>
+          <div class="profile-option">
+            <input type="radio" name="profileType" id="typeEmployee" value="Employee" />
+            <label for="typeEmployee">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+              </svg>
+              Employee
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Employee-only fields (animated) -->
+      <div class="employee-fields" id="employeeFields">
+        <div class="form-group">
+          <label>Company Name <span class="req">*</span></label>
+          <input type="text" id="companyName" placeholder="Enter your company name" />
+        </div>
+
+        <div class="row-2">
+          <div class="form-group">
+            <label>Domain <span class="req">*</span></label>
+            <input type="text" id="domain" placeholder="e.g. IT, Finance, HR" />
+          </div>
+          <div class="form-group">
+            <label>Experience <span class="req">*</span></label>
+            <input type="text" id="experience" placeholder="e.g. 2 years" />
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">
+        <span id="btnText">Submit Registration</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+
+    </form>
+  </div>
+
+  <p class="footer-note">Your information is kept confidential and used only for enrollment purposes.</p>
+</div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
+
+  // Profile type toggle — show/hide employee fields
+  const employeeFields = document.getElementById('employeeFields');
+  document.querySelectorAll('input[name="profileType"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'Employee' && radio.checked) {
+        employeeFields.classList.add('visible');
+      } else if (radio.value === 'Student' && radio.checked) {
+        employeeFields.classList.remove('visible');
+        document.getElementById('companyName').value = '';
+        document.getElementById('domain').value = '';
+        document.getElementById('experience').value = '';
+      }
+    });
+  });
+
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (isError ? ' error' : '');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
   }
 
-  btn.disabled = false;
-  btnText.textContent = "Submit Registration";
-  spinner.style.display = "none";
+  document.getElementById('regForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-});
+    const name          = document.getElementById('name').value.trim();
+    const phone         = document.getElementById('phone').value.trim();
+    const dob           = document.getElementById('dob').value;
+    const email         = document.getElementById('email').value.trim();
+    const course        = document.getElementById('course').value;
+    const address       = document.getElementById('address').value.trim();
+    const paymentStatus = document.getElementById('paymentStatus').value;
+    const profileType   = document.querySelector('input[name="profileType"]:checked').value;
+    const companyName   = document.getElementById('companyName').value.trim();
+    const domain        = document.getElementById('domain').value.trim();
+    const experience    = document.getElementById('experience').value.trim();
+
+    // Base validation
+    if (!name || !phone || !dob || !email || !course || !address || !paymentStatus) {
+      showToast('⚠️ Please fill in all required fields.', true); return;
+    }
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      showToast('⚠️ Enter a valid 10-digit phone number.', true); return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('⚠️ Enter a valid email address.', true); return;
+    }
+
+    // Employee-specific validation
+    if (profileType === 'Employee') {
+      if (!companyName || !domain || !experience) {
+        showToast('⚠️ Please fill in all employee details.', true); return;
+      }
+    }
+
+    const btn     = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+
+    btn.disabled = true;
+    btnText.textContent = 'Submitting...';
+    spinner.style.display = 'block';
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          dob,
+          course,
+          address,
+          profileType,
+          companyName: profileType === 'Employee' ? companyName : '',
+          domain:      profileType === 'Employee' ? domain      : '',
+          experience:  profileType === 'Employee' ? experience  : '',
+          paymentStatus
+        })
+      });
+
+      showToast('✅ Registration successful! We will contact you soon.');
+      document.getElementById('regForm').reset();
+      employeeFields.classList.remove('visible');
+
+    } catch (err) {
+      showToast('❌ Something went wrong. Please try again.', true);
+    } finally {
+      btn.disabled = false;
+      btnText.textContent = 'Submit Registration';
+      spinner.style.display = 'none';
+    }
+  });
 </script>
+</body>
+</html>
