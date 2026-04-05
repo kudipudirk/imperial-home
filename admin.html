@@ -14,7 +14,6 @@
     }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
 
-    /* LOGIN */
     #loginScreen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
     .login-box {
       background:var(--card); border-radius:16px; padding:48px 44px; width:100%; max-width:420px;
@@ -34,7 +33,6 @@
     .login-btn:hover { background:#15304f; }
     .login-error { margin-top:12px; font-size:13px; color:var(--danger); display:none; }
 
-    /* DASHBOARD */
     #dashboard { display:none; min-height:100vh; }
     .topnav { background:var(--primary); padding:0 32px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
     .nav-brand { display:flex; align-items:center; gap:10px; font-family:'DM Serif Display',serif; font-size:18px; color:#fff; }
@@ -44,11 +42,10 @@
     .logout-btn { background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 16px; border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; }
     .logout-btn:hover { background:rgba(255,255,255,0.2); }
 
-    .main { padding:32px; max-width:1500px; margin:0 auto; }
+    .main { padding:32px; max-width:1600px; margin:0 auto; }
     .page-title { font-family:'DM Serif Display',serif; font-size:26px; color:var(--primary); margin-bottom:6px; }
     .page-sub { font-size:13.5px; color:var(--muted); margin-bottom:28px; }
 
-    /* SUMMARY */
     .summary-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:16px; margin-bottom:32px; }
     .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; transition:box-shadow 0.2s; }
     .stat-card:hover { box-shadow:0 4px 16px rgba(26,60,94,0.08); }
@@ -62,7 +59,6 @@
     .stat-card.total .stat-number { color:#fff; }
     .stat-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; display:inline-block; margin-right:5px; }
 
-    /* TABLE */
     .table-section { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
     .table-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     .table-title { font-weight:600; font-size:16px; color:var(--primary); }
@@ -78,6 +74,7 @@
     }
     .refresh-btn { padding:8px 16px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; transition:background 0.2s; }
     .refresh-btn:hover { background:#15304f; }
+
     .table-wrap { overflow-x:auto; }
     table { width:100%; border-collapse:collapse; font-size:13px; }
     thead { background:#f8f6f2; }
@@ -87,18 +84,27 @@
     tr:hover td { background:#faf8f5; }
     .sno { color:var(--muted); font-size:12px; font-weight:600; }
     .course-badge { background:#e8f0f8; color:var(--primary); padding:3px 9px; border-radius:20px; font-size:11.5px; font-weight:600; white-space:nowrap; }
-
-    /* Profile type badges */
     .profile-badge { padding:3px 9px; border-radius:20px; font-size:11.5px; font-weight:600; white-space:nowrap; }
     .profile-badge.student  { background:#f0faf4; color:#1e6b4a; }
     .profile-badge.employee { background:#fff3e0; color:#b45309; }
-
-    /* Employee info cell */
     .emp-info { font-size:12px; line-height:1.6; color:var(--text); }
     .emp-info span { display:block; color:var(--muted); font-size:11px; }
     .na-dash { color:#ccc; font-size:13px; }
 
-    /* PAYMENT STATUS DROPDOWN */
+    /* BATCH SELECT */
+    .batch-select {
+      padding:5px 28px 5px 10px; border-radius:8px; font-size:12px; font-weight:600;
+      cursor:pointer; border:1.5px solid var(--border); outline:none; font-family:'DM Sans',sans-serif;
+      appearance:none; background-color:var(--input-bg); color:var(--primary);
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%231a3c5e' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 8px center;
+      transition:border-color 0.2s, opacity 0.2s; min-width:110px;
+    }
+    .batch-select:focus { border-color:var(--primary); }
+    .batch-select.assigned { background-color:#e8f0f8; border-color:#93b4d4; }
+    .batch-select:disabled { opacity:0.5; cursor:not-allowed; }
+
+    /* PAYMENT STATUS */
     .status-select {
       padding:5px 28px 5px 10px; border-radius:20px; font-size:12px; font-weight:600;
       cursor:pointer; border:none; outline:none; font-family:'DM Sans',sans-serif; appearance:none;
@@ -110,7 +116,6 @@
     .status-select.Partial { background-color:#dbeafe; color:#1d4ed8; }
     .status-select:disabled { opacity:0.5; cursor:not-allowed; }
 
-    /* DELETE BTN */
     .del-btn { background:var(--danger-bg); color:var(--danger); border:1px solid #f5c6c6; border-radius:7px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; white-space:nowrap; }
     .del-btn:hover { background:#fbd3d3; }
 
@@ -120,7 +125,6 @@
     @keyframes spin { to { transform:rotate(360deg); } }
     .table-footer { padding:14px 24px; border-top:1px solid var(--border); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
 
-    /* MODAL */
     .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:999; opacity:0; pointer-events:none; transition:opacity 0.2s; }
     .modal-overlay.show { opacity:1; pointer-events:all; }
     .modal { background:#fff; border-radius:14px; padding:36px 32px; max-width:380px; width:90%; text-align:center; box-shadow:0 16px 48px rgba(0,0,0,0.18); transform:scale(0.95); transition:transform 0.2s; }
@@ -129,12 +133,11 @@
     .modal h3 { font-family:'DM Serif Display',serif; font-size:20px; color:var(--text); margin-bottom:8px; }
     .modal p { font-size:13.5px; color:var(--muted); margin-bottom:24px; line-height:1.5; }
     .modal-btns { display:flex; gap:10px; }
-    .modal-cancel { flex:1; padding:11px; border:1.5px solid var(--border); background:#fff; border-radius:9px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; color:var(--muted); transition:background 0.2s; }
+    .modal-cancel { flex:1; padding:11px; border:1.5px solid var(--border); background:#fff; border-radius:9px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; color:var(--muted); }
     .modal-cancel:hover { background:var(--bg); }
-    .modal-confirm { flex:1; padding:11px; border:none; background:var(--danger); border-radius:9px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; color:#fff; transition:background 0.2s; }
+    .modal-confirm { flex:1; padding:11px; border:none; background:var(--danger); border-radius:9px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; color:#fff; }
     .modal-confirm:hover { background:#a93226; }
 
-    /* TOAST */
     .toast { position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-80px); padding:12px 24px; border-radius:50px; font-size:14px; font-weight:500; color:#fff; box-shadow:0 8px 24px rgba(0,0,0,0.15); transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1); z-index:1000; white-space:nowrap; }
     .toast.show { transform:translateX(-50%) translateY(0); }
     .toast.success { background:#1e6b4a; }
@@ -148,12 +151,11 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- CONFIRM MODAL -->
 <div class="modal-overlay" id="confirmModal">
   <div class="modal">
     <div class="modal-icon">🗑️</div>
     <h3>Delete Registration?</h3>
-    <p id="modalMsg">This record will be permanently deleted from the dashboard and Google Sheet.</p>
+    <p id="modalMsg">This record will be permanently deleted.</p>
     <div class="modal-btns">
       <button class="modal-cancel" onclick="closeModal()">Cancel</button>
       <button class="modal-confirm" onclick="confirmDelete()">Yes, Delete</button>
@@ -165,9 +167,7 @@
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-icon">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
     </div>
     <h2>Admin Login</h2>
     <p>Imperial Academy — Dashboard Access</p>
@@ -182,7 +182,7 @@
   <nav class="topnav">
     <div class="nav-brand">
       <div class="nav-brand-icon">🎓</div>
-      Imperial Academy
+      Imperial Academy — Admin
     </div>
     <div class="nav-right">
       <span class="nav-badge" id="lastRefresh">—</span>
@@ -195,22 +195,10 @@
     <div class="page-sub" id="pageSubText">Loading data...</div>
 
     <div class="summary-grid" id="summaryGrid">
-      <div class="stat-card total">
-        <div class="stat-label">Total Registered</div>
-        <div class="stat-number" id="totalCount">—</div>
-      </div>
-      <div class="stat-card paid-card">
-        <div class="stat-label">✅ Paid</div>
-        <div class="stat-number" id="paidCount" style="color:#1e6b4a">—</div>
-      </div>
-      <div class="stat-card pending-card">
-        <div class="stat-label">⏳ Pending</div>
-        <div class="stat-number" id="pendingCount" style="color:#856404">—</div>
-      </div>
-      <div class="stat-card partial-card">
-        <div class="stat-label">💳 Partial</div>
-        <div class="stat-number" id="partialCount" style="color:#1d4ed8">—</div>
-      </div>
+      <div class="stat-card total"><div class="stat-label">Total Registered</div><div class="stat-number" id="totalCount">—</div></div>
+      <div class="stat-card paid-card"><div class="stat-label">✅ Paid</div><div class="stat-number" id="paidCount" style="color:#1e6b4a">—</div></div>
+      <div class="stat-card pending-card"><div class="stat-label">⏳ Pending</div><div class="stat-number" id="pendingCount" style="color:#856404">—</div></div>
+      <div class="stat-card partial-card"><div class="stat-label">💳 Partial</div><div class="stat-number" id="partialCount" style="color:#1d4ed8">—</div></div>
     </div>
 
     <div class="table-section">
@@ -220,13 +208,13 @@
           <input class="search-box" type="text" id="searchBox" placeholder="🔍 Search..." oninput="renderTable()"/>
           <select class="filter-select" id="courseFilter" onchange="renderTable()"><option value="">All Courses</option></select>
           <select class="filter-select" id="profileFilter" onchange="renderTable()">
-            <option value="">All Profiles</option>
-            <option>Student</option>
-            <option>Employee</option>
+            <option value="">All Profiles</option><option>Student</option><option>Employee</option>
           </select>
           <select class="filter-select" id="statusFilter" onchange="renderTable()">
-            <option value="">All Status</option>
-            <option>Paid</option><option>Pending</option><option>Partial</option>
+            <option value="">All Status</option><option>Paid</option><option>Pending</option><option>Partial</option>
+          </select>
+          <select class="filter-select" id="batchFilter" onchange="renderTable()">
+            <option value="">All Batches</option>
           </select>
           <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
         </div>
@@ -236,18 +224,9 @@
         <table id="dataTable" style="display:none">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Timestamp</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>DOB</th>
-              <th>Course</th>
-              <th>Address</th>
-              <th>Profile</th>
-              <th>Company / Domain / Exp</th>
-              <th>Payment</th>
-              <th>Action</th>
+              <th>#</th><th>Timestamp</th><th>Name</th><th>Phone</th><th>Email</th>
+              <th>DOB</th><th>Course</th><th>Address</th><th>Profile</th>
+              <th>Company / Domain / Exp</th><th>Batch</th><th>Payment</th><th>Action</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -266,19 +245,12 @@
   const ADMIN_PASSWORD = "Welcome@123";
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
 
-  // Google Sheet column mapping (0-indexed after timestamp):
-  // [0] Timestamp
-  // [1] Name
-  // [2] Phone
-  // [3] Email
-  // [4] DOB
-  // [5] Course
-  // [6] Address
-  // [7] Profile Type
-  // [8] Company Name
-  // [9] Domain
-  // [10] Experience
-  // [11] Payment Status
+  // Sheet column index (0-based):
+  // [0]Timestamp [1]Name [2]Phone [3]Email [4]DOB [5]Course [6]Address
+  // [7]ProfileType [8]CompanyName [9]Domain [10]Experience [11]PaymentStatus [12]BatchNumber
+
+  const BATCHES = ['', 'Batch 1', 'Batch 2', 'Batch 3', 'Batch 4', 'Batch 5',
+                   'Batch 6', 'Batch 7', 'Batch 8', 'Batch 9', 'Batch 10'];
 
   let allData = [];
   let pendingDeleteIdx = null;
@@ -301,7 +273,7 @@
   function fmtDOB(val) {
     if (!val) return '—';
     try {
-      const str = String(val).split('T')[0].replace(/^\+0*/, '');
+      const str = String(val).split('T')[0];
       const parts = str.split('-');
       if (parts.length === 3) {
         const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -352,7 +324,6 @@
     document.getElementById('pendingCount').textContent = allData.filter(r => (r[11]||'Pending') === 'Pending').length;
     document.getElementById('partialCount').textContent = allData.filter(r => (r[11]||'Pending') === 'Partial').length;
 
-    // Course-wise stat cards
     const grid = document.getElementById('summaryGrid');
     grid.querySelectorAll('.course-card').forEach(el => el.remove());
     const cc = {};
@@ -366,10 +337,17 @@
   }
 
   function buildFilters() {
-    const sel = document.getElementById('courseFilter');
+    // Course filter
+    const csel = document.getElementById('courseFilter');
     const courses = [...new Set(allData.map(r => r[5]).filter(Boolean))].sort();
-    sel.innerHTML = '<option value="">All Courses</option>';
-    courses.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; sel.appendChild(o); });
+    csel.innerHTML = '<option value="">All Courses</option>';
+    courses.forEach(c => { const o = document.createElement('option'); o.value=c; o.textContent=c; csel.appendChild(o); });
+
+    // Batch filter
+    const bsel = document.getElementById('batchFilter');
+    const batches = [...new Set(allData.map(r => r[12]).filter(Boolean))].sort();
+    bsel.innerHTML = '<option value="">All Batches</option>';
+    batches.forEach(b => { const o = document.createElement('option'); o.value=b; o.textContent=b; bsel.appendChild(o); });
   }
 
   function renderTable() {
@@ -377,17 +355,18 @@
     const course  = document.getElementById('courseFilter').value;
     const profile = document.getElementById('profileFilter').value;
     const status  = document.getElementById('statusFilter').value;
+    const batch   = document.getElementById('batchFilter').value;
 
-    const filtered = allData.map((row, i) => ({row, i})).filter(({row}) => {
-      const ms  = !search  || [row[1], row[2], row[3], row[8]].some(v => (v||'').toLowerCase().includes(search));
+    const filtered = allData.map((row,i) => ({row,i})).filter(({row}) => {
+      const ms  = !search  || [row[1],row[2],row[3],row[8]].some(v => (v||'').toLowerCase().includes(search));
       const mc  = !course  || row[5] === course;
       const mp  = !profile || (row[7]||'Student') === profile;
       const mst = !status  || (row[11]||'Pending') === status;
-      return ms && mc && mp && mst;
+      const mb  = !batch   || (row[12]||'') === batch;
+      return ms && mc && mp && mst && mb;
     });
 
     document.getElementById('loadingState').style.display = 'none';
-
     if (!filtered.length) {
       document.getElementById('dataTable').style.display = 'none';
       document.getElementById('emptyState').style.display = 'block';
@@ -401,20 +380,18 @@
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
 
-    filtered.forEach(({row, i}, num) => {
-      const pay     = row[11] || 'Pending';
-      const profile = row[7]  || 'Student';
-      const isEmp   = profile === 'Employee';
+    filtered.forEach(({row,i}, num) => {
+      const pay      = row[11] || 'Pending';
+      const profType = row[7]  || 'Student';
+      const batchVal = row[12] || '';
+      const isEmp    = profType === 'Employee';
 
       const empCell = isEmp
-        ? `<div class="emp-info">
-            <strong>${row[8]||'—'}</strong>
-            <span>Domain: ${row[9]||'—'}</span>
-            <span>Exp: ${row[10]||'—'}</span>
-           </div>`
+        ? `<div class="emp-info"><strong>${row[8]||'—'}</strong><span>Domain: ${row[9]||'—'}</span><span>Exp: ${row[10]||'—'}</span></div>`
         : `<span class="na-dash">—</span>`;
 
-      const profileBadge = `<span class="profile-badge ${profile.toLowerCase()}">${profile}</span>`;
+      // Build batch options
+      let batchOpts = BATCHES.map(b => `<option value="${b}" ${batchVal===b?'selected':''}>${b||'— Assign Batch —'}</option>`).join('');
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -425,14 +402,19 @@
         <td style="font-size:12px">${row[3]||'—'}</td>
         <td style="font-size:12px;white-space:nowrap">${fmtDOB(row[4])}</td>
         <td><span class="course-badge">${row[5]||'—'}</span></td>
-        <td style="font-size:12px;max-width:130px">${row[6]||'—'}</td>
-        <td>${profileBadge}</td>
+        <td style="font-size:12px;max-width:120px">${row[6]||'—'}</td>
+        <td><span class="profile-badge ${profType.toLowerCase()}">${profType}</span></td>
         <td>${empCell}</td>
         <td>
+          <select class="batch-select ${batchVal?'assigned':''}" onchange="changeBatch(this,${i})">
+            ${batchOpts}
+          </select>
+        </td>
+        <td>
           <select class="status-select ${pay}" onchange="changeStatus(this,${i})">
-            <option ${pay==='Paid'    ?'selected':''}>Paid</option>
-            <option ${pay==='Pending' ?'selected':''}>Pending</option>
-            <option ${pay==='Partial' ?'selected':''}>Partial</option>
+            <option ${pay==='Paid'   ?'selected':''}>Paid</option>
+            <option ${pay==='Pending'?'selected':''}>Pending</option>
+            <option ${pay==='Partial'?'selected':''}>Partial</option>
           </select>
         </td>
         <td><button class="del-btn" onclick="askDelete(${i},'${(row[1]||'').replace(/'/g,"\\'")}')">🗑 Delete</button></td>`;
@@ -442,6 +424,23 @@
     document.getElementById('rowCount').textContent = filtered.length + ' of ' + allData.length + ' records';
   }
 
+  async function changeBatch(el, idx) {
+    const newBatch = el.value;
+    el.className = 'batch-select ' + (newBatch ? 'assigned' : '');
+    el.disabled = true;
+    allData[idx][12] = newBatch;
+    try {
+      await fetch(SCRIPT_URL, {
+        method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ action:'updateBatch', rowIndex: idx+2, batch: newBatch })
+      });
+      showToast('✅ ' + (newBatch || 'Batch removed') + ' assigned successfully', 'success');
+      buildFilters();
+    } catch { showToast('❌ Failed to update batch', 'error'); }
+    finally { el.disabled = false; }
+  }
+
   async function changeStatus(el, idx) {
     const newStatus = el.value;
     el.className = 'status-select ' + newStatus;
@@ -449,9 +448,9 @@
     allData[idx][11] = newStatus;
     try {
       await fetch(SCRIPT_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ action: 'updateStatus', rowIndex: idx+2, status: newStatus })
+        method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ action:'updateStatus', rowIndex: idx+2, status: newStatus })
       });
       showToast('✅ Payment status updated to ' + newStatus, 'success');
       buildSummary();
@@ -476,9 +475,9 @@
     if (idx === null) return;
     try {
       await fetch(SCRIPT_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ action: 'deleteRow', rowIndex: idx+2 })
+        method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ action:'deleteRow', rowIndex: idx+2 })
       });
       allData.splice(idx, 1);
       buildSummary(); buildFilters(); renderTable();
