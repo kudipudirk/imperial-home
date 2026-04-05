@@ -42,17 +42,18 @@
     .logout-btn { background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 16px; border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; }
     .logout-btn:hover { background:rgba(255,255,255,0.2); }
 
-    .main { padding:32px; max-width:1600px; margin:0 auto; }
+    .main { padding:32px; max-width:1800px; margin:0 auto; }
     .page-title { font-family:'DM Serif Display',serif; font-size:26px; color:var(--primary); margin-bottom:6px; }
     .page-sub { font-size:13.5px; color:var(--muted); margin-bottom:28px; }
 
     .summary-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:16px; margin-bottom:32px; }
     .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; transition:box-shadow 0.2s; }
     .stat-card:hover { box-shadow:0 4px 16px rgba(26,60,94,0.08); }
-    .stat-card.total { background:var(--primary); border-color:var(--primary); }
-    .stat-card.paid-card    { border-left:4px solid #1e6b4a; }
-    .stat-card.pending-card { border-left:4px solid #c8963e; }
-    .stat-card.partial-card { border-left:4px solid #1d4ed8; }
+    .stat-card.total          { background:var(--primary); border-color:var(--primary); }
+    .stat-card.paid-card      { border-left:4px solid #1e6b4a; }
+    .stat-card.pending-card   { border-left:4px solid #c8963e; }
+    .stat-card.partial-card   { border-left:4px solid #1d4ed8; }
+    .stat-card.completed-card { border-left:4px solid #7c3aed; }
     .stat-label { font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); margin-bottom:8px; }
     .stat-card.total .stat-label { color:rgba(255,255,255,0.65); }
     .stat-number { font-family:'DM Serif Display',serif; font-size:32px; color:var(--primary); line-height:1; }
@@ -115,6 +116,19 @@
     .status-select.Pending { background-color:#fff3cd; color:#856404; }
     .status-select.Partial { background-color:#dbeafe; color:#1d4ed8; }
     .status-select:disabled { opacity:0.5; cursor:not-allowed; }
+
+    /* COURSE COMPLETION STATUS */
+    .completion-select {
+      padding:5px 28px 5px 10px; border-radius:20px; font-size:12px; font-weight:600;
+      cursor:pointer; border:none; outline:none; font-family:'DM Sans',sans-serif; appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%23555' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 8px center; transition:opacity 0.2s; min-width:120px;
+    }
+    .completion-select.In-Progress { background-color:#fef9c3; color:#854d0e; }
+    .completion-select.Completed   { background-color:#dcfce7; color:#14532d; }
+    .completion-select.Dropped     { background-color:#fee2e2; color:#991b1b; }
+    .completion-select.Not-Started { background-color:#f1f5f9; color:#475569; }
+    .completion-select:disabled { opacity:0.5; cursor:not-allowed; }
 
     .del-btn { background:var(--danger-bg); color:var(--danger); border:1px solid #f5c6c6; border-radius:7px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; white-space:nowrap; }
     .del-btn:hover { background:#fbd3d3; }
@@ -199,6 +213,7 @@
       <div class="stat-card paid-card"><div class="stat-label">✅ Paid</div><div class="stat-number" id="paidCount" style="color:#1e6b4a">—</div></div>
       <div class="stat-card pending-card"><div class="stat-label">⏳ Pending</div><div class="stat-number" id="pendingCount" style="color:#856404">—</div></div>
       <div class="stat-card partial-card"><div class="stat-label">💳 Partial</div><div class="stat-number" id="partialCount" style="color:#1d4ed8">—</div></div>
+      <div class="stat-card completed-card"><div class="stat-label">🎓 Completed</div><div class="stat-number" id="completedCount" style="color:#7c3aed">—</div></div>
     </div>
 
     <div class="table-section">
@@ -213,6 +228,10 @@
           <select class="filter-select" id="statusFilter" onchange="renderTable()">
             <option value="">All Status</option><option>Paid</option><option>Pending</option><option>Partial</option>
           </select>
+          <select class="filter-select" id="completionFilter" onchange="renderTable()">
+            <option value="">All Completion</option>
+            <option>Not Started</option><option>In Progress</option><option>Completed</option><option>Dropped</option>
+          </select>
           <select class="filter-select" id="batchFilter" onchange="renderTable()">
             <option value="">All Batches</option>
           </select>
@@ -226,7 +245,7 @@
             <tr>
               <th>#</th><th>Timestamp</th><th>Name</th><th>Phone</th><th>Email</th>
               <th>DOB</th><th>Course</th><th>Address</th><th>Profile</th>
-              <th>Company / Domain / Exp</th><th>Batch</th><th>Payment</th><th>Action</th>
+              <th>Company / Domain / Exp</th><th>Batch</th><th>Payment</th><th>Course Status</th><th>Action</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -247,10 +266,12 @@
 
   // Sheet column index (0-based):
   // [0]Timestamp [1]Name [2]Phone [3]Email [4]DOB [5]Course [6]Address
-  // [7]ProfileType [8]CompanyName [9]Domain [10]Experience [11]PaymentStatus [12]BatchNumber
+  // [7]ProfileType [8]CompanyName [9]Domain [10]Experience [11]PaymentStatus [12]BatchNumber [13]CompletionStatus
 
   const BATCHES = ['', 'Batch 1', 'Batch 2', 'Batch 3', 'Batch 4', 'Batch 5',
                    'Batch 6', 'Batch 7', 'Batch 8', 'Batch 9', 'Batch 10'];
+
+  const COMPLETION_STATUSES = ['Not Started', 'In Progress', 'Completed', 'Dropped'];
 
   let allData = [];
   let pendingDeleteIdx = null;
@@ -319,10 +340,11 @@
   }
 
   function buildSummary() {
-    document.getElementById('totalCount').textContent   = allData.length;
-    document.getElementById('paidCount').textContent    = allData.filter(r => (r[11]||'Pending') === 'Paid').length;
-    document.getElementById('pendingCount').textContent = allData.filter(r => (r[11]||'Pending') === 'Pending').length;
-    document.getElementById('partialCount').textContent = allData.filter(r => (r[11]||'Pending') === 'Partial').length;
+    document.getElementById('totalCount').textContent     = allData.length;
+    document.getElementById('paidCount').textContent      = allData.filter(r => (r[11]||'Pending') === 'Paid').length;
+    document.getElementById('pendingCount').textContent   = allData.filter(r => (r[11]||'Pending') === 'Pending').length;
+    document.getElementById('partialCount').textContent   = allData.filter(r => (r[11]||'Pending') === 'Partial').length;
+    document.getElementById('completedCount').textContent = allData.filter(r => (r[13]||'Not Started') === 'Completed').length;
 
     const grid = document.getElementById('summaryGrid');
     grid.querySelectorAll('.course-card').forEach(el => el.remove());
@@ -337,13 +359,11 @@
   }
 
   function buildFilters() {
-    // Course filter
     const csel = document.getElementById('courseFilter');
     const courses = [...new Set(allData.map(r => r[5]).filter(Boolean))].sort();
     csel.innerHTML = '<option value="">All Courses</option>';
     courses.forEach(c => { const o = document.createElement('option'); o.value=c; o.textContent=c; csel.appendChild(o); });
 
-    // Batch filter
     const bsel = document.getElementById('batchFilter');
     const batches = [...new Set(allData.map(r => r[12]).filter(Boolean))].sort();
     bsel.innerHTML = '<option value="">All Batches</option>';
@@ -351,19 +371,21 @@
   }
 
   function renderTable() {
-    const search  = document.getElementById('searchBox').value.toLowerCase();
-    const course  = document.getElementById('courseFilter').value;
-    const profile = document.getElementById('profileFilter').value;
-    const status  = document.getElementById('statusFilter').value;
-    const batch   = document.getElementById('batchFilter').value;
+    const search     = document.getElementById('searchBox').value.toLowerCase();
+    const course     = document.getElementById('courseFilter').value;
+    const profile    = document.getElementById('profileFilter').value;
+    const status     = document.getElementById('statusFilter').value;
+    const completion = document.getElementById('completionFilter').value;
+    const batch      = document.getElementById('batchFilter').value;
 
     const filtered = allData.map((row,i) => ({row,i})).filter(({row}) => {
-      const ms  = !search  || [row[1],row[2],row[3],row[8]].some(v => (v||'').toLowerCase().includes(search));
-      const mc  = !course  || row[5] === course;
-      const mp  = !profile || (row[7]||'Student') === profile;
-      const mst = !status  || (row[11]||'Pending') === status;
-      const mb  = !batch   || (row[12]||'') === batch;
-      return ms && mc && mp && mst && mb;
+      const ms  = !search     || [row[1],row[2],row[3],row[8]].some(v => (v||'').toLowerCase().includes(search));
+      const mc  = !course     || row[5] === course;
+      const mp  = !profile    || (row[7]||'Student') === profile;
+      const mst = !status     || (row[11]||'Pending') === status;
+      const mcp = !completion || (row[13]||'Not Started') === completion;
+      const mb  = !batch      || (row[12]||'') === batch;
+      return ms && mc && mp && mst && mcp && mb;
     });
 
     document.getElementById('loadingState').style.display = 'none';
@@ -381,17 +403,24 @@
     tbody.innerHTML = '';
 
     filtered.forEach(({row,i}, num) => {
-      const pay      = row[11] || 'Pending';
-      const profType = row[7]  || 'Student';
-      const batchVal = row[12] || '';
-      const isEmp    = profType === 'Employee';
+      const pay        = row[11] || 'Pending';
+      const profType   = row[7]  || 'Student';
+      const batchVal   = row[12] || '';
+      const completion = row[13] || 'Not Started';
+      const isEmp      = profType === 'Employee';
 
       const empCell = isEmp
         ? `<div class="emp-info"><strong>${row[8]||'—'}</strong><span>Domain: ${row[9]||'—'}</span><span>Exp: ${row[10]||'—'}</span></div>`
         : `<span class="na-dash">—</span>`;
 
-      // Build batch options
       let batchOpts = BATCHES.map(b => `<option value="${b}" ${batchVal===b?'selected':''}>${b||'— Assign Batch —'}</option>`).join('');
+
+      let completionOpts = COMPLETION_STATUSES.map(s =>
+        `<option value="${s}" ${completion===s?'selected':''}>${s}</option>`
+      ).join('');
+
+      // CSS class uses hyphenated version for "In Progress", "Not Started"
+      const completionClass = completion.replace(/\s+/g, '-');
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -415,6 +444,11 @@
             <option ${pay==='Paid'   ?'selected':''}>Paid</option>
             <option ${pay==='Pending'?'selected':''}>Pending</option>
             <option ${pay==='Partial'?'selected':''}>Partial</option>
+          </select>
+        </td>
+        <td>
+          <select class="completion-select ${completionClass}" onchange="changeCompletion(this,${i})">
+            ${completionOpts}
           </select>
         </td>
         <td><button class="del-btn" onclick="askDelete(${i},'${(row[1]||'').replace(/'/g,"\\'")}')">🗑 Delete</button></td>`;
@@ -455,6 +489,23 @@
       showToast('✅ Payment status updated to ' + newStatus, 'success');
       buildSummary();
     } catch { showToast('❌ Failed to update status', 'error'); }
+    finally { el.disabled = false; }
+  }
+
+  async function changeCompletion(el, idx) {
+    const newVal = el.value;
+    el.className = 'completion-select ' + newVal.replace(/\s+/g, '-');
+    el.disabled = true;
+    allData[idx][13] = newVal;
+    try {
+      await fetch(SCRIPT_URL, {
+        method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ action:'updateCompletion', rowIndex: idx+2, completionStatus: newVal })
+      });
+      showToast('🎓 Course status updated to ' + newVal, 'success');
+      buildSummary();
+    } catch { showToast('❌ Failed to update course status', 'error'); }
     finally { el.disabled = false; }
   }
 
