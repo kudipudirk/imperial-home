@@ -33,12 +33,60 @@
     .login-btn:hover { background:#15304f; }
     .login-error { margin-top:12px; font-size:13px; color:var(--danger); display:none; }
 
+    /* Creator credit on login page */
+    .login-creator {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .login-creator-text { font-size: 12px; color: var(--muted); }
+    .login-creator-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600; color: var(--primary);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .login-creator-link:hover { color: var(--accent); }
+    .insta-dot {
+      width: 16px; height: 16px;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      border-radius: 4px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .insta-dot svg { width: 9px; height: 9px; fill: white; }
+
     #dashboard { display:none; min-height:100vh; }
     .topnav { background:var(--primary); padding:0 32px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
     .nav-brand { display:flex; align-items:center; gap:10px; font-family:'DM Serif Display',serif; font-size:18px; color:#fff; }
     .nav-brand-icon { background:var(--accent); width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; }
     .nav-right { display:flex; align-items:center; gap:16px; }
     .nav-badge { background:rgba(255,255,255,0.12); color:#fff; font-size:12px; padding:4px 12px; border-radius:20px; }
+
+    /* Creator pill in topnav */
+    .nav-creator {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 4px 12px 4px 6px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-creator:hover { background: rgba(255,255,255,0.15); }
+    .nav-creator-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 10px; color: var(--primary); font-weight: 700;
+    }
+    .nav-creator-info { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-creator-name { font-size: 11px; font-weight: 600; color: #fff; white-space: nowrap; }
+    .nav-creator-handle { font-size: 10px; color: rgba(255,255,255,0.55); }
+
     .logout-btn { background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 16px; border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; }
     .logout-btn:hover { background:rgba(255,255,255,0.2); }
 
@@ -59,7 +107,6 @@
     .stat-card.total .stat-label { color:rgba(255,255,255,0.65); }
     .stat-number { font-family:'DM Serif Display',serif; font-size:32px; color:var(--primary); line-height:1; }
     .stat-card.total .stat-number { color:#fff; }
-    .stat-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; display:inline-block; margin-right:5px; }
 
     .table-section { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
     .table-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
@@ -93,7 +140,6 @@
     .emp-info span { display:block; color:var(--muted); font-size:11px; }
     .na-dash { color:#ccc; font-size:13px; }
 
-    /* BATCH SELECT */
     .batch-select {
       padding:5px 28px 5px 10px; border-radius:8px; font-size:12px; font-weight:600;
       cursor:pointer; border:1.5px solid var(--border); outline:none; font-family:'DM Sans',sans-serif;
@@ -106,7 +152,6 @@
     .batch-select.assigned { background-color:#e8f0f8; border-color:#93b4d4; }
     .batch-select:disabled { opacity:0.5; cursor:not-allowed; }
 
-    /* PAYMENT STATUS */
     .status-select {
       padding:5px 28px 5px 10px; border-radius:20px; font-size:12px; font-weight:600;
       cursor:pointer; border:none; outline:none; font-family:'DM Sans',sans-serif; appearance:none;
@@ -118,7 +163,6 @@
     .status-select.Partial { background-color:#dbeafe; color:#1d4ed8; }
     .status-select:disabled { opacity:0.5; cursor:not-allowed; }
 
-    /* COURSE COMPLETION STATUS */
     .completion-select {
       padding:5px 28px 5px 10px; border-radius:20px; font-size:12px; font-weight:600;
       cursor:pointer; border:none; outline:none; font-family:'DM Sans',sans-serif; appearance:none;
@@ -159,7 +203,7 @@
     .toast.error   { background:var(--danger); }
     .toast.info    { background:var(--primary); }
 
-    @media(max-width:600px){ .main{padding:16px;} .topnav{padding:0 16px;} .search-box{width:130px;} }
+    @media(max-width:600px){ .main{padding:16px;} .topnav{padding:0 16px;} .search-box{width:130px;} .nav-creator-info { display:none; } }
   </style>
 </head>
 <body>
@@ -189,6 +233,19 @@
     <input type="password" id="passInput" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()"/>
     <button class="login-btn" onclick="doLogin()">🔐 Login</button>
     <p class="login-error" id="loginError">❌ Wrong password. Try again.</p>
+
+    <!-- Creator credit on login page -->
+    <div class="login-creator">
+      <span class="login-creator-text">Created by</span>
+      <a href="https://www.instagram.com/kudipudirk" target="_blank" rel="noopener" class="login-creator-link">
+        <div class="insta-dot">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </div>
+        Ramakrishna Kudipudi &nbsp;·&nbsp; @kudipudirk
+      </a>
+    </div>
   </div>
 </div>
 
@@ -201,6 +258,16 @@
     </div>
     <div class="nav-right">
       <span class="nav-badge" id="lastRefresh">—</span>
+
+      <!-- Creator pill -->
+      <a href="https://www.instagram.com/kudipudirk" target="_blank" rel="noopener" class="nav-creator">
+        <div class="nav-creator-avatar">RK</div>
+        <div class="nav-creator-info">
+          <span class="nav-creator-name">Ramakrishna Kudipudi</span>
+          <span class="nav-creator-handle">@kudipudirk</span>
+        </div>
+      </a>
+
       <button class="logout-btn" onclick="doLogout()">Logout</button>
     </div>
   </nav>
@@ -255,7 +322,7 @@
       </div>
       <div class="table-footer">
         <span id="rowCount">—</span>
-        <span style="font-size:12px">Synced with Google Sheet</span>
+        <span style="font-size:12px">Synced with Google Sheet &nbsp;|&nbsp; Built by <a href="https://www.instagram.com/kudipudirk" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600;">@kudipudirk</a></span>
       </div>
     </div>
   </div>
@@ -265,13 +332,8 @@
   const ADMIN_PASSWORD = "Welcome@123";
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
 
-  // Sheet column index (0-based):
-  // [0]Timestamp [1]Name [2]Phone [3]Email [4]DOB [5]Course [6]Address
-  // [7]ProfileType [8]CompanyName [9]Domain [10]Experience [11]PaymentStatus [12]BatchNumber [13]CompletionStatus
-
   const BATCHES = ['', 'Batch 1', 'Batch 2', 'Batch 3', 'Batch 4', 'Batch 5',
                    'Batch 6', 'Batch 7', 'Batch 8', 'Batch 9', 'Batch 10'];
-
   const COMPLETION_STATUSES = ['Not Started', 'In Progress', 'Completed', 'Dropped'];
 
   let allData = [];
@@ -404,12 +466,7 @@
         : `<span class="na-dash">—</span>`;
 
       let batchOpts = BATCHES.map(b => `<option value="${b}" ${batchVal===b?'selected':''}>${b||'— Assign Batch —'}</option>`).join('');
-
-      let completionOpts = COMPLETION_STATUSES.map(s =>
-        `<option value="${s}" ${completion===s?'selected':''}>${s}</option>`
-      ).join('');
-
-      // CSS class uses hyphenated version for "In Progress", "Not Started"
+      let completionOpts = COMPLETION_STATUSES.map(s => `<option value="${s}" ${completion===s?'selected':''}>${s}</option>`).join('');
       const completionClass = completion.replace(/\s+/g, '-');
 
       const tr = document.createElement('tr');
