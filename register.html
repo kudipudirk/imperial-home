@@ -121,8 +121,17 @@
 
     .profile-option label svg { width: 16px; height: 16px; }
 
-    .employee-fields { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.4s ease, opacity 0.3s ease; }
-    .employee-fields.visible { max-height: 600px; opacity: 1; }
+    /* Slide animation for conditional fields */
+    .conditional-fields {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+    }
+    .conditional-fields.visible {
+      max-height: 700px;
+      opacity: 1;
+    }
 
     .btn {
       width: 100%; padding: 15px; background: var(--primary); color: #fff;
@@ -220,7 +229,7 @@
         <label>Course Interested <span class="req">*</span></label>
         <select id="course" required>
           <option value="">— Select a course —</option>
-          <option>Aws Cloud</option>
+          <option>AWS Cloud</option>
           <option>Azure Cloud</option>
           <option>Oracle Cloud</option>
           <option>SAP All Modules</option>
@@ -234,8 +243,7 @@
           <option>Database</option>
           <option>SQL</option>
           <option>ServiceNow</option>
-          <option>Digital Marketing</option>
-          <option>Kuberenetes Administrator</option>
+          <option>Kubernetes Administrator</option>
           <option>Other</option>
         </select>
       </div>
@@ -267,8 +275,36 @@
         </div>
       </div>
 
-      <!-- Employee-only fields -->
-      <div class="employee-fields" id="employeeFields">
+      <!-- ✅ STUDENT-ONLY FIELDS -->
+      <div class="conditional-fields visible" id="studentFields">
+        <div class="form-group">
+          <label>Study (Stream / Course) <span class="req">*</span></label>
+          <input type="text" id="study" placeholder="e.g. B.Tech CSE, BCA, MCA, B.Com" />
+        </div>
+        <div class="row-2">
+          <div class="form-group">
+            <label>Current Year <span class="req">*</span></label>
+            <select id="currentYear">
+              <option value="">— Select Year —</option>
+              <option>1st Year</option>
+              <option>2nd Year</option>
+              <option>3rd Year</option>
+              <option>4th Year</option>
+              <option>Passed Out</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Passed Out Year <span class="req">*</span></label>
+            <select id="passedOutYear">
+              <option value="">— Select Year —</option>
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ EMPLOYEE-ONLY FIELDS -->
+      <div class="conditional-fields" id="employeeFields">
         <div class="form-group">
           <label>Company Name <span class="req">*</span></label>
           <input type="text" id="companyName" placeholder="Enter your company name" />
@@ -299,13 +335,35 @@
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
 
+  // ─── Populate Passed Out Year dropdown ───────────────────────────────────────
+  const passedOutYearSel = document.getElementById('passedOutYear');
+  const currentYr = new Date().getFullYear();
+  for (let y = currentYr + 4; y >= 2010; y--) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    passedOutYearSel.appendChild(opt);
+  }
+
+  // ─── Profile Toggle Logic ─────────────────────────────────────────────────────
+  const studentFields  = document.getElementById('studentFields');
   const employeeFields = document.getElementById('employeeFields');
+
   document.querySelectorAll('input[name="profileType"]').forEach(radio => {
     radio.addEventListener('change', () => {
       if (radio.value === 'Employee' && radio.checked) {
+        // Show employee, hide student
+        studentFields.classList.remove('visible');
         employeeFields.classList.add('visible');
+        // Clear student fields
+        document.getElementById('study').value = '';
+        document.getElementById('currentYear').value = '';
+        document.getElementById('passedOutYear').value = '';
       } else if (radio.value === 'Student' && radio.checked) {
+        // Show student, hide employee
         employeeFields.classList.remove('visible');
+        studentFields.classList.add('visible');
+        // Clear employee fields
         document.getElementById('companyName').value = '';
         document.getElementById('domain').value = '';
         document.getElementById('experience').value = '';
@@ -313,6 +371,7 @@
     });
   });
 
+  // ─── Toast ───────────────────────────────────────────────────────────────────
   function showToast(msg, isError = false) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -321,6 +380,7 @@
     setTimeout(() => t.classList.remove('show'), 4000);
   }
 
+  // ─── Form Submit ──────────────────────────────────────────────────────────────
   document.getElementById('regForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -331,10 +391,18 @@
     const course      = document.getElementById('course').value;
     const address     = document.getElementById('address').value.trim();
     const profileType = document.querySelector('input[name="profileType"]:checked').value;
+
+    // Student fields
+    const study         = document.getElementById('study').value.trim();
+    const currentYear   = document.getElementById('currentYear').value;
+    const passedOutYear = document.getElementById('passedOutYear').value;
+
+    // Employee fields
     const companyName = document.getElementById('companyName').value.trim();
     const domain      = document.getElementById('domain').value.trim();
     const experience  = document.getElementById('experience').value.trim();
 
+    // ── Validations ──
     if (!name || !phone || !dob || !email || !course || !address) {
       showToast('⚠️ Please fill in all required fields.', true); return;
     }
@@ -343,6 +411,9 @@
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       showToast('⚠️ Enter a valid email address.', true); return;
+    }
+    if (profileType === 'Student' && (!study || !currentYear || !passedOutYear)) {
+      showToast('⚠️ Please fill in all student details.', true); return;
     }
     if (profileType === 'Employee' && (!companyName || !domain || !experience)) {
       showToast('⚠️ Please fill in all employee details.', true); return;
@@ -362,18 +433,31 @@
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name, phone, email, dob, course, address, profileType,
-          companyName: profileType === 'Employee' ? companyName : '',
-          domain:      profileType === 'Employee' ? domain      : '',
-          experience:  profileType === 'Employee' ? experience  : '',
-          paymentStatus: 'Pending',   // default — admin will update
-          completionStatus: 'In Progress' // default
+          name,
+          phone,
+          email,
+          dob,
+          course,
+          address,
+          profileType,
+          // Student data (empty if Employee)
+          study:        profileType === 'Student' ? study        : '',
+          currentYear:  profileType === 'Student' ? currentYear  : '',
+          passedOutYear: profileType === 'Student' ? passedOutYear : '',
+          // Employee data (empty if Student)
+          companyName:  profileType === 'Employee' ? companyName : '',
+          domain:       profileType === 'Employee' ? domain      : '',
+          experience:   profileType === 'Employee' ? experience  : '',
+          paymentStatus:    'Pending',
+          completionStatus: 'In Progress'
         })
       });
 
       showToast('✅ Registration successful! We will contact you soon.');
       document.getElementById('regForm').reset();
+      // Reset view: show student fields by default
       employeeFields.classList.remove('visible');
+      studentFields.classList.add('visible');
 
     } catch (err) {
       showToast('❌ Something went wrong. Please try again.', true);
