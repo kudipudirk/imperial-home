@@ -26,9 +26,9 @@
       background: var(--bg);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 40px 16px;
+      padding: 40px 16px 0;
     }
 
     .wrapper { width: 100%; max-width: 560px; }
@@ -121,7 +121,6 @@
 
     .profile-option label svg { width: 16px; height: 16px; }
 
-    /* Slide animation for conditional fields */
     .conditional-fields {
       overflow: hidden;
       max-height: 0;
@@ -165,9 +164,55 @@
 
     .footer-note { text-align: center; margin-top: 20px; font-size: 12.5px; color: var(--muted); }
 
+    /* ── CREATOR FOOTER ── */
+    .creator-footer {
+      width: 100%; max-width: 560px;
+      margin-top: 28px; margin-bottom: 40px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .creator-left {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .creator-avatar-sm {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 15px; color: var(--accent); flex-shrink: 0;
+      border: 2px solid var(--accent);
+    }
+    .creator-info-text { display: flex; flex-direction: column; }
+    .creator-made-by { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+    .creator-name-sm { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--primary); }
+    .creator-insta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--primary); color: #fff;
+      padding: 9px 18px; border-radius: 8px;
+      text-decoration: none; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .creator-insta-btn:hover { background: #15304f; transform: translateY(-1px); }
+    .insta-icon-sm {
+      width: 18px; height: 18px;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .insta-icon-sm svg { width: 11px; height: 11px; fill: white; }
+
     @media (max-width: 520px) {
       .card { padding: 28px 20px; }
       .row-2 { grid-template-columns: 1fr; gap: 0; }
+      .creator-footer { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -193,7 +238,6 @@
   <div class="card">
     <form id="regForm" novalidate>
 
-      <!-- SECTION 1: Personal Info -->
       <p class="section-label">Personal Information</p>
 
       <div class="form-group">
@@ -222,7 +266,6 @@
         <textarea id="address" placeholder="Enter your full address"></textarea>
       </div>
 
-      <!-- SECTION 2: Course Info -->
       <p class="section-label">Course Details</p>
 
       <div class="form-group">
@@ -248,7 +291,6 @@
         </select>
       </div>
 
-      <!-- SECTION 3: Profile Type -->
       <p class="section-label">Profile Type</p>
 
       <div class="form-group">
@@ -275,7 +317,6 @@
         </div>
       </div>
 
-      <!-- ✅ STUDENT-ONLY FIELDS -->
       <div class="conditional-fields visible" id="studentFields">
         <div class="form-group">
           <label>Study (Stream / Course) <span class="req">*</span></label>
@@ -286,24 +327,19 @@
             <label>Current Year <span class="req">*</span></label>
             <select id="currentYear">
               <option value="">— Select Year —</option>
-              <option>1st Year</option>
-              <option>2nd Year</option>
-              <option>3rd Year</option>
-              <option>4th Year</option>
-              <option>Passed Out</option>
+              <option>1st Year</option><option>2nd Year</option>
+              <option>3rd Year</option><option>4th Year</option><option>Passed Out</option>
             </select>
           </div>
           <div class="form-group">
             <label>Passed Out Year <span class="req">*</span></label>
             <select id="passedOutYear">
               <option value="">— Select Year —</option>
-              <!-- Dynamically populated -->
             </select>
           </div>
         </div>
       </div>
 
-      <!-- ✅ EMPLOYEE-ONLY FIELDS -->
       <div class="conditional-fields" id="employeeFields">
         <div class="form-group">
           <label>Company Name <span class="req">*</span></label>
@@ -330,40 +366,52 @@
   </div>
 
   <p class="footer-note">Your information is kept confidential and used only for enrollment purposes.</p>
+
+  <!-- ── CREATOR CARD ── -->
+  <div class="creator-footer">
+    <div class="creator-left">
+      <div class="creator-avatar-sm">RK</div>
+      <div class="creator-info-text">
+        <span class="creator-made-by">Website Created By</span>
+        <span class="creator-name-sm">Ramakrishna Kudipudi</span>
+      </div>
+    </div>
+    <a href="https://www.instagram.com/kudipudirk" target="_blank" rel="noopener" class="creator-insta-btn">
+      <div class="insta-icon-sm">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </div>
+      @kudipudirk
+    </a>
+  </div>
 </div>
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPa-sbYKuOf6m9-DrqUTnNRxYB_47CgdUBSepIBYZC03HzjP_kUjVKbs1fXt77z1R4/exec";
 
-  // ─── Populate Passed Out Year dropdown ───────────────────────────────────────
   const passedOutYearSel = document.getElementById('passedOutYear');
   const currentYr = new Date().getFullYear();
   for (let y = currentYr + 4; y >= 2010; y--) {
     const opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = y;
+    opt.value = y; opt.textContent = y;
     passedOutYearSel.appendChild(opt);
   }
 
-  // ─── Profile Toggle Logic ─────────────────────────────────────────────────────
   const studentFields  = document.getElementById('studentFields');
   const employeeFields = document.getElementById('employeeFields');
 
   document.querySelectorAll('input[name="profileType"]').forEach(radio => {
     radio.addEventListener('change', () => {
       if (radio.value === 'Employee' && radio.checked) {
-        // Show employee, hide student
         studentFields.classList.remove('visible');
         employeeFields.classList.add('visible');
-        // Clear student fields
         document.getElementById('study').value = '';
         document.getElementById('currentYear').value = '';
         document.getElementById('passedOutYear').value = '';
       } else if (radio.value === 'Student' && radio.checked) {
-        // Show student, hide employee
         employeeFields.classList.remove('visible');
         studentFields.classList.add('visible');
-        // Clear employee fields
         document.getElementById('companyName').value = '';
         document.getElementById('domain').value = '';
         document.getElementById('experience').value = '';
@@ -371,7 +419,6 @@
     });
   });
 
-  // ─── Toast ───────────────────────────────────────────────────────────────────
   function showToast(msg, isError = false) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -380,7 +427,6 @@
     setTimeout(() => t.classList.remove('show'), 4000);
   }
 
-  // ─── Form Submit ──────────────────────────────────────────────────────────────
   document.getElementById('regForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -392,17 +438,13 @@
     const address     = document.getElementById('address').value.trim();
     const profileType = document.querySelector('input[name="profileType"]:checked').value;
 
-    // Student fields
     const study         = document.getElementById('study').value.trim();
     const currentYear   = document.getElementById('currentYear').value;
     const passedOutYear = document.getElementById('passedOutYear').value;
+    const companyName   = document.getElementById('companyName').value.trim();
+    const domain        = document.getElementById('domain').value.trim();
+    const experience    = document.getElementById('experience').value.trim();
 
-    // Employee fields
-    const companyName = document.getElementById('companyName').value.trim();
-    const domain      = document.getElementById('domain').value.trim();
-    const experience  = document.getElementById('experience').value.trim();
-
-    // ── Validations ──
     if (!name || !phone || !dob || !email || !course || !address) {
       showToast('⚠️ Please fill in all required fields.', true); return;
     }
@@ -419,46 +461,32 @@
       showToast('⚠️ Please fill in all employee details.', true); return;
     }
 
-    const btn     = document.getElementById('submitBtn');
+    const btn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
     const spinner = document.getElementById('spinner');
-
-    btn.disabled = true;
-    btnText.textContent = 'Submitting...';
-    spinner.style.display = 'block';
+    btn.disabled = true; btnText.textContent = 'Submitting...'; spinner.style.display = 'block';
 
     try {
       await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
+        method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name,
-          phone,
-          email,
-          dob,
-          course,
-          address,
-          profileType,
-          // Student data (empty if Employee)
-          study:        profileType === 'Student' ? study        : '',
-          currentYear:  profileType === 'Student' ? currentYear  : '',
+          name, phone, email, dob, course, address, profileType,
+          study: profileType === 'Student' ? study : '',
+          currentYear: profileType === 'Student' ? currentYear : '',
           passedOutYear: profileType === 'Student' ? passedOutYear : '',
-          // Employee data (empty if Student)
-          companyName:  profileType === 'Employee' ? companyName : '',
-          domain:       profileType === 'Employee' ? domain      : '',
-          experience:   profileType === 'Employee' ? experience  : '',
-          paymentStatus:    'Pending',
+          companyName: profileType === 'Employee' ? companyName : '',
+          domain: profileType === 'Employee' ? domain : '',
+          experience: profileType === 'Employee' ? experience : '',
+          paymentStatus: 'Pending',
           completionStatus: 'In Progress'
         })
       });
 
       showToast('✅ Registration successful! We will contact you soon.');
       document.getElementById('regForm').reset();
-      // Reset view: show student fields by default
       employeeFields.classList.remove('visible');
       studentFields.classList.add('visible');
-
     } catch (err) {
       showToast('❌ Something went wrong. Please try again.', true);
     } finally {
