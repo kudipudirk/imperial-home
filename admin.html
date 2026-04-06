@@ -404,10 +404,10 @@
 
   function buildSummary() {
     document.getElementById('totalCount').textContent     = allData.length;
-    document.getElementById('paidCount').textContent      = allData.filter(r => (r[11]||'Pending') === 'Paid').length;
-    document.getElementById('pendingCount').textContent   = allData.filter(r => (r[11]||'Pending') === 'Pending').length;
-    document.getElementById('partialCount').textContent   = allData.filter(r => (r[11]||'Pending') === 'Partial').length;
-    document.getElementById('completedCount').textContent = allData.filter(r => (r[13]||'Not Started') === 'Completed').length;
+    document.getElementById('paidCount').textContent      = allData.filter(r => (r[14]||'Pending') === 'Paid').length;
+    document.getElementById('pendingCount').textContent   = allData.filter(r => (r[14]||'Pending') === 'Pending').length;
+    document.getElementById('partialCount').textContent   = allData.filter(r => (r[14]||'Pending') === 'Partial').length;
+    document.getElementById('completedCount').textContent = allData.filter(r => (r[16]||'Not Started') === 'Completed').length;
   }
 
   function buildFilters() {
@@ -417,7 +417,7 @@
     courses.forEach(c => { const o = document.createElement('option'); o.value=c; o.textContent=c; csel.appendChild(o); });
 
     const bsel = document.getElementById('batchFilter');
-    const batches = [...new Set(allData.map(r => r[12]).filter(Boolean))].sort();
+    const batches = [...new Set(allData.map(r => r[15]).filter(Boolean))].sort();
     bsel.innerHTML = '<option value="">All Batches</option>';
     batches.forEach(b => { const o = document.createElement('option'); o.value=b; o.textContent=b; bsel.appendChild(o); });
   }
@@ -431,12 +431,12 @@
     const batch      = document.getElementById('batchFilter').value;
 
     const filtered = allData.map((row,i) => ({row,i})).filter(({row}) => {
-      const ms  = !search     || [row[1],row[2],row[3],row[8]].some(v => (v||'').toLowerCase().includes(search));
+      const ms  = !search     || [row[1],row[2],row[3],row[11]].some(v => (v||'').toLowerCase().includes(search));
       const mc  = !course     || row[5] === course;
       const mp  = !profile    || (row[7]||'Student') === profile;
-      const mst = !status     || (row[11]||'Pending') === status;
-      const mcp = !completion || (row[13]||'Not Started') === completion;
-      const mb  = !batch      || (row[12]||'') === batch;
+      const mst = !status     || (row[14]||'Pending') === status;
+      const mcp = !completion || (row[16]||'Not Started') === completion;
+      const mb  = !batch      || (row[15]||'') === batch;
       return ms && mc && mp && mst && mcp && mb;
     });
 
@@ -455,14 +455,14 @@
     tbody.innerHTML = '';
 
     filtered.forEach(({row,i}, num) => {
-      const pay        = row[11] || 'Pending';
+      const pay        = row[14] || 'Pending';
       const profType   = row[7]  || 'Student';
-      const batchVal   = row[12] || '';
-      const completion = row[13] || 'Not Started';
+      const batchVal   = row[15] || '';
+      const completion = row[16] || 'Not Started';
       const isEmp      = profType === 'Employee';
 
       const empCell = isEmp
-        ? `<div class="emp-info"><strong>${row[8]||'—'}</strong><span>Domain: ${row[9]||'—'}</span><span>Exp: ${row[10]||'—'}</span></div>`
+        ? `<div class="emp-info"><strong>${row[11]||'—'}</strong><span>Domain: ${row[12]||'—'}</span><span>Exp: ${row[13]||'—'}</span></div>`
         : `<span class="na-dash">—</span>`;
 
       let batchOpts = BATCHES.map(b => `<option value="${b}" ${batchVal===b?'selected':''}>${b||'— Assign Batch —'}</option>`).join('');
@@ -509,7 +509,7 @@
     const newBatch = el.value;
     el.className = 'batch-select ' + (newBatch ? 'assigned' : '');
     el.disabled = true;
-    allData[idx][12] = newBatch;
+    allData[idx][15] = newBatch;
     try {
       await fetch(SCRIPT_URL, {
         method:'POST', mode:'no-cors',
@@ -526,7 +526,7 @@
     const newStatus = el.value;
     el.className = 'status-select ' + newStatus;
     el.disabled = true;
-    allData[idx][11] = newStatus;
+    allData[idx][14] = newStatus;
     try {
       await fetch(SCRIPT_URL, {
         method:'POST', mode:'no-cors',
@@ -543,7 +543,7 @@
     const newVal = el.value;
     el.className = 'completion-select ' + newVal.replace(/\s+/g, '-');
     el.disabled = true;
-    allData[idx][13] = newVal;
+    allData[idx][16] = newVal;
     try {
       await fetch(SCRIPT_URL, {
         method:'POST', mode:'no-cors',
