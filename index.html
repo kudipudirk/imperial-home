@@ -7,421 +7,311 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:wght@300;400;600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C97A;
-    --gold-dark: #8B6914;
-    --navy: #0D1B2A;
-    --navy-mid: #162032;
-    --navy-light: #1E2F45;
-    --navy-card: #172338;
-    --white: #F5F0E8;
-    --white-pure: #FFFFFF;
-    --gray-muted: #8A9BB0;
-    --red-accent: #B22222;
-    --success: #2E7D32;
-    --border: rgba(201,168,76,0.25);
+    --gold: #C9A84C; --gold-light: #E8C97A; --gold-dark: #8B6914;
+    --navy: #0D1B2A; --navy-mid: #162032; --navy-light: #1E2F45;
+    --navy-card: #172338; --white: #F5F0E8; --white-pure: #FFFFFF;
+    --gray-muted: #8A9BB0; --border: rgba(201,168,76,0.25);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'Barlow', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
+  body { background: var(--navy); color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
 
-  /* NAVBAR */
-  nav {
-    position: fixed; top: 0; width: 100%; z-index: 999;
-    background: rgba(13,27,42,0.97);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem;
-    height: 70px;
-  }
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 999; background: rgba(13,27,42,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 70px; }
   .nav-logo { display: flex; align-items: center; gap: 14px; }
   .nav-logo img { height: 44px; }
   .nav-brand { font-family: 'Playfair Display', serif; }
   .nav-brand span:first-child { display: block; font-size: 16px; color: var(--white-pure); letter-spacing: 2px; }
   .nav-brand span:last-child { display: block; font-size: 10px; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    color: var(--gray-muted); text-decoration: none; font-size: 13px;
-    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500;
-    transition: color 0.3s;
-  }
+  .nav-links a { color: var(--gray-muted); text-decoration: none; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; transition: color 0.3s; }
   .nav-links a:hover { color: var(--gold); }
-  .nav-cta {
-    background: transparent; border: 1px solid var(--gold);
-    color: var(--gold); padding: 8px 22px; font-family: 'Barlow', sans-serif;
-    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.3s; text-decoration: none;
-    display: inline-block;
-  }
+  .nav-cta { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 22px; font-family: 'Barlow', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
   .nav-cta:hover { background: var(--gold); color: var(--navy); }
 
   /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 100px 2rem 4rem;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--border); padding: 6px 20px;
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 2.5rem;
-  }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 2rem 4rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 6px 20px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 2.5rem; }
   .hero-badge::before, .hero-badge::after { content: '◆'; font-size: 7px; }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    font-weight: 900; line-height: 1.05;
-    color: var(--white-pure);
-    margin-bottom: 0.3rem;
-  }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; line-height: 1.05; color: var(--white-pure); margin-bottom: 0.3rem; }
   .hero h1 span { color: var(--gold); }
-  .hero-tagline {
-    font-family: 'Crimson Pro', serif;
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    color: var(--gray-muted); letter-spacing: 2px;
-    margin-bottom: 1.5rem; font-style: italic;
-  }
-  .hero-desc {
-    max-width: 580px; font-size: 15px; line-height: 1.8;
-    color: #7A8FA8; margin-bottom: 3rem;
-  }
+  .hero-tagline { font-family: 'Crimson Pro', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); color: var(--gray-muted); letter-spacing: 2px; margin-bottom: 1.5rem; font-style: italic; }
+  .hero-desc { max-width: 580px; font-size: 15px; line-height: 1.8; color: #7A8FA8; margin-bottom: 3rem; }
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-  .btn-primary {
-    background: var(--gold); color: var(--navy);
-    padding: 14px 36px; font-family: 'Barlow', sans-serif;
-    font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
-    text-transform: uppercase; border: none; cursor: pointer;
-    transition: all 0.3s; text-decoration: none; display: inline-block;
-  }
+  .btn-primary { background: var(--gold); color: var(--navy); padding: 14px 36px; font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-  .btn-outline {
-    background: transparent; color: var(--white);
-    border: 1px solid rgba(245,240,232,0.3);
-    padding: 14px 36px; font-family: 'Barlow', sans-serif;
-    font-size: 12px; font-weight: 500; letter-spacing: 2px;
-    text-transform: uppercase; cursor: pointer; transition: all 0.3s;
-    text-decoration: none; display: inline-block;
-  }
+  .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(245,240,232,0.3); padding: 14px 36px; font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
   .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-  .hero-divider {
-    width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-    margin: 3rem auto 0;
-  }
+  .hero-divider { width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); margin: 3rem auto 0; }
 
   /* STATS */
-  .stats-bar {
-    background: var(--navy-card);
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    padding: 2rem;
-    display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
-  }
-  .stat-item {
-    text-align: center; padding: 0.5rem 3rem;
-    border-right: 1px solid var(--border);
-  }
+  .stats-bar { background: var(--navy-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2rem; display: flex; justify-content: center; gap: 0; flex-wrap: wrap; }
+  .stat-item { text-align: center; padding: 0.5rem 3rem; border-right: 1px solid var(--border); }
   .stat-item:last-child { border-right: none; }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem; color: var(--gold); display: block;
-  }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); display: block; }
   .stat-label { font-size: 11px; letter-spacing: 2px; color: var(--gray-muted); text-transform: uppercase; }
 
-  /* SECTION COMMON */
+  /* SECTIONS */
   section { padding: 5rem 2rem; }
   .section-header { text-align: center; margin-bottom: 4rem; }
-  .section-tag {
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); display: block; margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: var(--white-pure); line-height: 1.2;
-  }
-  .section-line {
-    width: 60px; height: 2px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-    margin: 1.5rem auto 0;
-  }
+  .section-tag { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--white-pure); line-height: 1.2; }
+  .section-line { width: 60px; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 1.5rem auto 0; }
   .container { max-width: 1100px; margin: 0 auto; }
 
   /* COURSES */
   #courses { background: var(--navy-mid); }
-  .courses-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px; background: var(--border);
-  }
-  .course-card {
-    background: var(--navy-card); padding: 2rem 1.5rem;
-    border: 1px solid transparent;
-    transition: all 0.3s; cursor: default; position: relative; overflow: hidden;
-  }
-  .course-card::before {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 2px; background: var(--gold);
-    transition: width 0.4s;
-  }
+  .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--border); }
+  .course-card { background: var(--navy-card); padding: 2rem 1.5rem; border: 1px solid transparent; transition: all 0.3s; position: relative; overflow: hidden; }
+  .course-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.4s; }
   .course-card:hover { border-color: var(--border); background: var(--navy-light); }
   .course-card:hover::before { width: 100%; }
   .course-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-  .course-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; color: var(--white-pure); margin-bottom: 0.5rem;
-  }
+  .course-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white-pure); margin-bottom: 0.5rem; }
   .course-desc { font-size: 13px; color: var(--gray-muted); line-height: 1.6; }
-  .course-badge {
-    display: inline-block; margin-top: 1rem;
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--gold); border: 1px solid var(--border); padding: 3px 10px;
-  }
+  .course-badge { display: inline-block; margin-top: 1rem; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); border: 1px solid var(--border); padding: 3px 10px; }
 
   /* WHY US */
   #why { background: var(--navy); }
-  .why-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-  }
-  .why-card {
-    padding: 2rem; border-left: 2px solid var(--gold);
-    background: rgba(201,168,76,0.03);
-  }
-  .why-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem; color: rgba(201,168,76,0.15); line-height: 1;
-    margin-bottom: 0.5rem;
-  }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+  .why-card { padding: 2rem; border-left: 2px solid var(--gold); background: rgba(201,168,76,0.03); }
+  .why-num { font-family: 'Playfair Display', serif; font-size: 3rem; color: rgba(201,168,76,0.15); line-height: 1; margin-bottom: 0.5rem; }
   .why-title { font-size: 15px; font-weight: 600; color: var(--white-pure); margin-bottom: 0.5rem; }
   .why-text { font-size: 13px; color: var(--gray-muted); line-height: 1.7; }
 
-  /* FEEDBACK SECTION */
-  #feedback { background: var(--navy-mid); }
-  .feedback-layout {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-    align-items: start;
-  }
-  @media(max-width:768px){ .feedback-layout { grid-template-columns: 1fr; gap: 2rem; } }
+  /* FOUNDERS */
+  #founders { background: var(--navy-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .founders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 960px; margin: 0 auto; }
+  .founder-card { background: var(--navy-card); border: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; position: relative; transition: all 0.3s; overflow: hidden; }
+  .founder-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  .founder-card:hover { border-color: rgba(201,168,76,0.5); background: var(--navy-light); transform: translateY(-4px); }
+  .founder-card.is-founder { border-color: rgba(201,168,76,0.4); }
+  .founder-card.is-founder::after { content: '◆ FOUNDER ◆'; position: absolute; top: 14px; right: 14px; font-size: 9px; letter-spacing: 2px; color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid var(--border); padding: 3px 10px; }
+  .founder-card.is-cofounder::after { content: 'CO-FOUNDER'; position: absolute; top: 14px; right: 14px; font-size: 9px; letter-spacing: 2px; color: var(--gray-muted); background: rgba(138,155,176,0.08); border: 1px solid rgba(138,155,176,0.2); padding: 3px 10px; }
+  .founder-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); background: linear-gradient(135deg, var(--navy-light), var(--navy-mid)); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.4rem; font-family: 'Playfair Display', serif; font-size: 28px; color: var(--gold); }
+  .founder-card.is-founder .founder-avatar { width: 90px; height: 90px; font-size: 30px; box-shadow: 0 0 0 4px rgba(201,168,76,0.1); }
+  .founder-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white-pure); margin-bottom: 0.25rem; }
+  .founder-card.is-founder .founder-name { font-size: 1.45rem; }
+  .founder-title { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .founder-card.is-cofounder .founder-title { color: var(--gray-muted); }
+  .founder-divider { width: 36px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 0 auto 1.2rem; }
+  .founder-desc { font-size: 13px; color: var(--gray-muted); line-height: 1.75; font-style: italic; }
+  .founder-quote { margin-top: 1.2rem; font-family: 'Crimson Pro', serif; font-size: 15px; color: rgba(201,168,76,0.7); font-style: italic; }
+  .founder-quote::before { content: '“'; }
+  .founder-quote::after { content: '”'; }
+  @media(max-width:768px){ .founders-grid { grid-template-columns: 1fr; } }
 
-  .form-card {
+  /* ═══════════════════════════════
+     REGISTER — REDESIGNED
+  ═══════════════════════════════ */
+  #register {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+  #register::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #register::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .register-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 5rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+  @media(max-width:768px){ .register-layout { grid-template-columns: 1fr; gap: 3rem; } }
+
+  .register-left {}
+  .register-eyebrow {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px;
+  }
+  .register-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .register-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--white-pure); line-height: 1.2; margin-bottom: 1.2rem;
+  }
+  .register-heading span { color: var(--gold); }
+  .register-subtext {
+    font-size: 14px; color: var(--gray-muted); line-height: 1.9;
+    margin-bottom: 2.5rem; border-left: 2px solid var(--gold);
+    padding-left: 1rem;
+  }
+  .contact-blocks { display: flex; flex-direction: column; gap: 1px; }
+  .contact-block {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 16px;
+    background: rgba(201,168,76,0.03);
+    border: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .contact-block:hover { background: rgba(201,168,76,0.07); }
+  .contact-icon-box {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+    color: var(--gold);
+  }
+  .contact-block-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray-muted); display: block; margin-bottom: 2px;
+  }
+  .contact-block-val {
+    font-size: 14px; color: var(--white-pure); font-weight: 500;
+  }
+  .contact-block-val a { color: var(--white-pure); text-decoration: none; }
+  .contact-block-val a:hover { color: var(--gold); }
+
+  /* Form */
+  .register-form-wrap {
     background: var(--navy-card);
     border: 1px solid var(--border);
-    padding: 2.5rem;
+    position: relative;
   }
-  .form-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem; color: var(--white-pure); margin-bottom: 1.5rem;
+  .register-form-wrap::before {
+    content: 'ENROLLMENT';
+    position: absolute; top: -1px; left: 2rem;
+    font-size: 9px; letter-spacing: 3px;
+    color: var(--gold); background: var(--navy-card);
+    padding: 0 10px;
+    transform: translateY(-50%);
   }
-  .form-group { margin-bottom: 1.2rem; }
+  .form-inner { padding: 2.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width:600px){ .form-row { grid-template-columns: 1fr; } }
+  .form-group { margin-bottom: 1rem; }
   .form-group label {
-    display: block; font-size: 11px; letter-spacing: 2px;
+    display: block; font-size: 10px; letter-spacing: 2px;
     text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
   }
   .form-group input, .form-group select, .form-group textarea {
-    width: 100%; background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.2);
+    width: 100%; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
     color: var(--white); padding: 10px 14px;
     font-family: 'Barlow', sans-serif; font-size: 14px;
-    outline: none; transition: border-color 0.3s;
-    -webkit-appearance: none;
+    outline: none; transition: all 0.3s; -webkit-appearance: none;
   }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
     border-color: var(--gold);
+    background: rgba(201,168,76,0.04);
   }
   .form-group select option { background: var(--navy-card); color: var(--white); }
-  .form-group textarea { resize: vertical; min-height: 90px; }
-  .stars-row { display: flex; gap: 8px; }
-  .star {
-    font-size: 1.6rem; cursor: pointer; color: rgba(201,168,76,0.3);
-    transition: color 0.2s; user-select: none;
+  .form-group textarea { resize: none; height: 80px; }
+  .btn-enroll {
+    width: 100%; margin-top: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; cursor: pointer; transition: all 0.4s;
+    position: relative; overflow: hidden;
   }
-  .star.active, .star:hover { color: var(--gold); }
-  .btn-submit {
-    width: 100%; background: var(--gold); color: var(--navy);
-    border: none; padding: 13px; font-family: 'Barlow', sans-serif;
-    font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
-    text-transform: uppercase; cursor: pointer; transition: all 0.3s;
-    margin-top: 0.5rem;
+  .btn-enroll::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+    z-index: 0;
   }
-  .btn-submit:hover { background: var(--gold-light); }
-  .success-msg {
-    display: none; background: rgba(46,125,50,0.15);
-    border: 1px solid rgba(46,125,50,0.4); color: #81C784;
-    padding: 12px; font-size: 13px; text-align: center; margin-top: 1rem;
-  }
+  .btn-enroll:hover::before { transform: translateX(0); }
+  .btn-enroll:hover { color: var(--navy); }
+  .btn-enroll span { position: relative; z-index: 1; }
 
-  .feedback-display-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem; color: var(--white-pure); margin-bottom: 1.5rem;
-  }
-  .feedback-list { display: flex; flex-direction: column; gap: 1rem; }
-  .feedback-item {
-    background: var(--navy-card); border: 1px solid var(--border);
-    padding: 1.4rem; position: relative; animation: fadeIn 0.4s ease;
-  }
-  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-  .fb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-  .fb-name { font-weight: 600; font-size: 14px; color: var(--white-pure); }
-  .fb-stars { color: var(--gold); font-size: 13px; }
-  .fb-course {
-    font-size: 11px; color: var(--gold); letter-spacing: 1.5px;
-    text-transform: uppercase; margin-bottom: 0.5rem;
-  }
-  .fb-text { font-size: 13px; color: var(--gray-muted); line-height: 1.6; font-style: italic; }
-  .fb-date { font-size: 11px; color: rgba(138,155,176,0.5); margin-top: 0.5rem; }
-  .no-feedback { color: var(--gray-muted); font-size: 14px; font-style: italic; }
-
-  /* REGISTER SECTION */
-  #register { background: var(--navy); }
-  .register-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
-  @media(max-width:768px){ .register-grid { grid-template-columns: 1fr; gap: 2rem; } }
-  .register-info h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem; color: var(--white-pure); margin-bottom: 1rem;
-  }
-  .register-info p { font-size: 14px; color: var(--gray-muted); line-height: 1.8; margin-bottom: 1.5rem; }
-  .contact-detail {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 1rem; font-size: 14px;
-  }
-  .contact-icon { font-size: 1.1rem; color: var(--gold); width: 24px; text-align: center; }
-  .contact-val { color: var(--white); }
-  .contact-val a { color: var(--gold); text-decoration: none; }
-  .contact-val a:hover { text-decoration: underline; }
-
-  /* ── CREATOR SECTION ── */
+  /* ═══════════════════════════════
+     CREATOR — COMPACT & STYLISH
+  ═══════════════════════════════ */
   #creator {
     background: var(--navy-card);
     border-top: 1px solid var(--border);
-    padding: 4rem 2rem;
+    padding: 2rem;
   }
-  .creator-inner {
-    max-width: 700px; margin: 0 auto; text-align: center;
-  }
-  .creator-tag {
-    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); display: block; margin-bottom: 2rem;
-  }
-  .creator-card {
-    background: rgba(201,168,76,0.04);
-    border: 1px solid var(--border);
-    padding: 2.5rem 2rem;
-    position: relative;
-  }
-  .creator-card::before, .creator-card::after {
-    content: '◆';
-    color: var(--gold);
-    font-size: 10px;
-    position: absolute;
-    top: -7px;
-    background: var(--navy-card);
-    padding: 0 6px;
-  }
-  .creator-card::before { left: 24px; }
-  .creator-card::after { right: 24px; }
-  .creator-avatar {
-    width: 72px; height: 72px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
-    border: 2px solid var(--gold);
+  .creator-strip {
+    max-width: 700px; margin: 0 auto;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 1.2rem;
-    font-family: 'Playfair Display', serif;
-    font-size: 26px; color: var(--gold);
+    gap: 1.5rem; flex-wrap: wrap;
   }
-  .creator-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; color: var(--white-pure); margin-bottom: 0.3rem;
+  .creator-left {
+    display: flex; align-items: center; gap: 14px;
   }
-  .creator-role {
-    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--gray-muted); margin-bottom: 1.5rem;
-  }
-  .creator-divider {
-    width: 40px; height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-    margin: 0 auto 1.5rem;
-  }
-  .creator-insta {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid rgba(201,168,76,0.3);
-    padding: 10px 22px;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-  .creator-insta:hover {
-    background: rgba(201,168,76,0.15);
-    border-color: var(--gold);
-    transform: translateY(-2px);
-  }
-  .insta-icon {
-    width: 20px; height: 20px;
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    border-radius: 5px;
+  .creator-av {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--gold);
     display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; color: var(--gold);
+    background: rgba(201,168,76,0.06);
     flex-shrink: 0;
   }
-  .insta-icon svg { width: 12px; height: 12px; fill: white; }
-  .creator-handle {
-    font-family: 'Barlow', sans-serif; font-size: 14px;
-    font-weight: 500; letter-spacing: 1px; color: var(--gold);
+  .creator-info {}
+  .creator-tag-sm {
+    font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--gray-muted); display: block; margin-bottom: 2px;
   }
-  .creator-note {
-    font-size: 12px; color: var(--gray-muted); margin-top: 1.5rem; line-height: 1.6;
+  .creator-nm {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--white-pure);
   }
+  .creator-sep {
+    width: 1px; height: 32px;
+    background: var(--border);
+  }
+  .creator-insta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 7px 16px;
+    text-decoration: none; transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .creator-insta:hover { background: rgba(201,168,76,0.14); border-color: var(--gold); }
+  .insta-icon { width: 18px; height: 18px; background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .insta-icon svg { width: 11px; height: 11px; fill: white; }
+  .creator-handle { font-size: 12px; font-weight: 500; letter-spacing: 1px; color: var(--gold); }
+  @media(max-width:600px){ .creator-sep { display: none; } .creator-strip { gap: 1rem; } }
 
   /* FOOTER */
-  footer {
-    background: var(--navy);
-    border-top: 1px solid var(--border);
-    text-align: center; padding: 2.5rem 2rem;
-  }
-  .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem; color: var(--gold); margin-bottom: 0.5rem;
-  }
-  .footer-tagline {
-    font-size: 11px; letter-spacing: 3px; color: var(--gray-muted);
-    text-transform: uppercase; margin-bottom: 1.5rem;
-  }
+  footer { background: var(--navy); border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 2rem; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .footer-tagline { font-size: 11px; letter-spacing: 3px; color: var(--gray-muted); text-transform: uppercase; margin-bottom: 1.5rem; }
   .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
   .footer-links a { color: var(--gray-muted); text-decoration: none; font-size: 12px; letter-spacing: 1px; }
   .footer-links a:hover { color: var(--gold); }
   .footer-copy { font-size: 12px; color: rgba(138,155,176,0.4); }
-  .footer-creator {
-    font-size: 12px; color: rgba(138,155,176,0.5); margin-top: 6px;
-  }
+  .footer-creator { font-size: 12px; color: rgba(138,155,176,0.5); margin-top: 6px; }
   .footer-creator a { color: var(--gold); text-decoration: none; opacity: 0.8; }
-  .footer-creator a:hover { opacity: 1; }
 
-  /* MOBILE NAV */
+  /* HAMBURGER */
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--gold); }
-  @media(max-width:768px){
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    nav { padding: 0 1.5rem; }
-    .stats-bar .stat-item { padding: 0.5rem 1.5rem; }
-    .hero h1 { font-size: 2.4rem; }
-  }
+  @media(max-width:768px){ .nav-links { display: none; } .hamburger { display: flex; } nav { padding: 0 1.5rem; } .stats-bar .stat-item { padding: 0.5rem 1.5rem; } .hero h1 { font-size: 2.4rem; } }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo">
     <img src="logo.png" alt="Imperial Tech Academy Logo" onerror="this.style.display='none'">
@@ -433,14 +323,12 @@
   <ul class="nav-links">
     <li><a href="#courses">Courses</a></li>
     <li><a href="#why">Why Us</a></li>
-    <li><a href="#feedback">Feedback</a></li>
+    <li><a href="#founders">Our Team</a></li>
     <li><a href="#register">Register</a></li>
     <li><a href="#creator">Creator</a></li>
   </ul>
   <a href="#register" class="nav-cta">Enroll Now</a>
-  <div class="hamburger" onclick="toggleNav()">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
 </nav>
 
 <!-- HERO -->
@@ -448,9 +336,7 @@
   <div class="hero-badge">Excellence in Technology Education</div>
   <h1>Imperial<br><span>Tech Academy</span></h1>
   <p class="hero-tagline">Kudipudirk — Through Hardship to the Stars</p>
-  <p class="hero-desc">
-    Master the technologies that power the world's infrastructure. From Cloud to DevOps, from Databases to Programming — we forge industry-ready professionals.
-  </p>
+  <p class="hero-desc">Master the technologies that power the world’s infrastructure. From Cloud to DevOps, from Databases to Programming — we forge industry-ready professionals.</p>
   <div class="hero-btns">
     <a href="#register" class="btn-primary">Start Your Journey</a>
     <a href="#courses" class="btn-outline">Explore Courses</a>
@@ -460,22 +346,10 @@
 
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stat-item">
-    <span class="stat-num">10+</span>
-    <span class="stat-label">Courses Offered</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">100%</span>
-    <span class="stat-label">Practical Training</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">Expert</span>
-    <span class="stat-label">Industry Trainers</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">Live</span>
-    <span class="stat-label">Project Experience</span>
-  </div>
+  <div class="stat-item"><span class="stat-num">10+</span><span class="stat-label">Courses Offered</span></div>
+  <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Practical Training</span></div>
+  <div class="stat-item"><span class="stat-num">Expert</span><span class="stat-label">Industry Trainers</span></div>
+  <div class="stat-item"><span class="stat-num">Live</span><span class="stat-label">Project Experience</span></div>
 </div>
 
 <!-- COURSES -->
@@ -491,7 +365,7 @@
       <div class="course-card"><span class="course-icon">⚙️</span><div class="course-name">DevOps</div><div class="course-desc">CI/CD pipelines, Docker, Kubernetes, Jenkins, Terraform automation.</div><span class="course-badge">Automation</span></div>
       <div class="course-card"><span class="course-icon">🐧</span><div class="course-name">Linux</div><div class="course-desc">Shell scripting, system administration, networking, and security.</div><span class="course-badge">OS</span></div>
       <div class="course-card"><span class="course-icon">🔷</span><div class="course-name">Azure</div><div class="course-desc">Microsoft Azure cloud — VMs, Active Directory, Azure DevOps.</div><span class="course-badge">Cloud</span></div>
-      <div class="course-card"><span class="course-icon">🏛️</span><div class="course-name">Oracle</div><div class="course-desc">Oracle DB, RAC, Data Guard, OCI infrastructure & administration.</div><span class="course-badge">Database</span></div>
+      <div class="course-card"><span class="course-icon">🏛️</span><div class="course-name">Oracle</div><div class="course-desc">Oracle DB, RAC, Data Guard, OCI infrastructure &amp; administration.</div><span class="course-badge">Database</span></div>
       <div class="course-card"><span class="course-icon">🗄️</span><div class="course-name">SQL</div><div class="course-desc">Structured Query Language — queries, stored procedures, optimization.</div><span class="course-badge">Database</span></div>
       <div class="course-card"><span class="course-icon">🐍</span><div class="course-name">Python</div><div class="course-desc">Programming fundamentals to automation, scripting, and data handling.</div><span class="course-badge">Programming</span></div>
       <div class="course-card"><span class="course-icon">☕</span><div class="course-name">Java</div><div class="course-desc">Core Java, OOPs, collections, Spring framework basics.</div><span class="course-badge">Programming</span></div>
@@ -518,130 +392,133 @@
   </div>
 </section>
 
-<!-- FEEDBACK SECTION -->
-<section id="feedback">
+<!-- FOUNDERS -->
+<section id="founders">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Student Reviews</span>
-      <h2 class="section-title">What Our Students Say</h2>
+      <span class="section-tag">The People Behind Imperial</span>
+      <h2 class="section-title">Meet Our Founders</h2>
       <div class="section-line"></div>
     </div>
-    <div class="feedback-layout">
-      <div class="form-card">
-        <div class="form-title">Share Your Experience</div>
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" id="fb-name" placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label>Course Completed</label>
-          <select id="fb-course">
-            <option value="">-- Select Course --</option>
-            <option>AWS</option><option>DevOps</option><option>Linux</option>
-            <option>Azure</option><option>Oracle</option><option>SQL</option>
-            <option>Python</option><option>Java</option><option>.NET</option><option>VMware</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Rating</label>
-          <div class="stars-row">
-            <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span>
-            <span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Your Review</label>
-          <textarea id="fb-text" placeholder="Share your experience..."></textarea>
-        </div>
-        <button class="btn-submit" onclick="submitFeedback()">Submit Review</button>
-        <div class="success-msg" id="fb-success">✓ Thank you for your feedback!</div>
+    <div class="founders-grid">
+      <div class="founder-card is-founder">
+        <div class="founder-avatar">RK</div>
+        <div class="founder-name">Ramakrishna Kudipudi</div>
+        <div class="founder-title">Founder &amp; Director</div>
+        <div class="founder-divider"></div>
+        <div class="founder-desc">The visionary mind behind Imperial Tech Academy. From the initial idea and meticulous planning to full implementation — Ramakrishna built this institution from the ground up, driven by a passion to transform tech careers across Andhra Pradesh.</div>
+        <div class="founder-quote">Building the future, one student at a time.</div>
       </div>
-      <div>
-        <div class="feedback-display-title">Recent Reviews</div>
-        <div class="feedback-list" id="feedback-list">
-          <p class="no-feedback">No reviews yet. Be the first!</p>
-        </div>
+      <div class="founder-card is-cofounder">
+        <div class="founder-avatar">NL</div>
+        <div class="founder-name">Neeladri</div>
+        <div class="founder-title">Co-Founder</div>
+        <div class="founder-divider"></div>
+        <div class="founder-desc">A founding partner from day one. Neeladri has been integral to shaping the academy’s vision, supporting growth and ensuring students receive world-class training and guidance.</div>
+      </div>
+      <div class="founder-card is-cofounder">
+        <div class="founder-avatar">SA</div>
+        <div class="founder-name">Sai</div>
+        <div class="founder-title">Co-Founder</div>
+        <div class="founder-divider"></div>
+        <div class="founder-desc">A co-founder committed to the Imperial mission since the very beginning. Sai contributes to building a strong learning community and driving the academy’s vision forward.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- REGISTER SECTION -->
+<!-- REGISTER — REDESIGNED -->
 <section id="register">
   <div class="container">
     <div class="section-header">
       <span class="section-tag">Begin Your Journey</span>
-      <h2 class="section-title">Register Your Interest</h2>
+      <h2 class="section-title">Register Your <span style="color:var(--gold)">Interest</span></h2>
       <div class="section-line"></div>
     </div>
-    <div class="register-grid">
-      <div class="register-info">
-        <h3>Ready to Transform Your Career?</h3>
-        <p>Fill in your details and our team will reach out to you with batch schedules, course fees, and enrollment guidance.</p>
-        <div class="contact-detail">
-          <span class="contact-icon">📞</span>
-          <span class="contact-val"><a href="tel:8106454491">8106454491</a></span>
-        </div>
-        <div class="contact-detail">
-          <span class="contact-icon">✉️</span>
-          <span class="contact-val"><a href="mailto:info@kudipudirk.in">info@kudipudirk.in</a></span>
-        </div>
-        <div class="contact-detail">
-          <span class="contact-icon">📍</span>
-          <span class="contact-val">Pathigondi, Andhra Pradesh</span>
+    <div class="register-layout">
+      <div class="register-left">
+        <div class="register-eyebrow">Get in touch</div>
+        <h3 class="register-heading">Ready to <span>Transform</span><br>Your Career?</h3>
+        <p class="register-subtext">Fill in your details and our team will reach out with batch schedules, course fees, and personalised enrollment guidance.</p>
+        <div class="contact-blocks">
+          <div class="contact-block">
+            <div class="contact-icon-box">📞</div>
+            <div>
+              <span class="contact-block-label">Call Us</span>
+              <div class="contact-block-val"><a href="tel:8106454491">8106454491</a></div>
+            </div>
+          </div>
+          <div class="contact-block">
+            <div class="contact-icon-box">✉️</div>
+            <div>
+              <span class="contact-block-label">Email</span>
+              <div class="contact-block-val"><a href="mailto:info@kudipudirk.in">info@kudipudirk.in</a></div>
+            </div>
+          </div>
+          <div class="contact-block">
+            <div class="contact-icon-box">📍</div>
+            <div>
+              <span class="contact-block-label">Location</span>
+              <div class="contact-block-val">Pathigondi, Andhra Pradesh</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-card">
-        <div class="form-title">Enrollment Form</div>
-        <form action="https://formspree.io/f/xbdpapbk" method="POST">
-          <input type="hidden" name="_subject" value="New Enrollment - Imperial Tech Academy">
-          <div class="form-group"><label>Full Name *</label><input type="text" name="name" placeholder="Your full name" required></div>
-          <div class="form-group"><label>Phone Number *</label><input type="tel" name="phone" placeholder="10-digit mobile number" required></div>
-          <div class="form-group"><label>Email Address *</label><input type="email" name="email" placeholder="your@email.com" required></div>
-          <div class="form-group">
-            <label>Course Interested In *</label>
-            <select name="course" required>
-              <option value="">-- Select Course --</option>
-              <option>AWS</option><option>DevOps</option><option>Linux</option><option>Azure</option>
-              <option>Oracle</option><option>SQL</option><option>Python</option><option>Java</option>
-              <option>.NET</option><option>VMware</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Preferred Batch Time</label>
-            <select name="batch">
-              <option value="">-- Select Timing --</option>
-              <option>Morning (7 AM - 9 AM)</option><option>Afternoon (1 PM - 3 PM)</option>
-              <option>Evening (6 PM - 8 PM)</option><option>Weekend Batch</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Message (Optional)</label><textarea name="message" placeholder="Any specific questions or requirements..."></textarea></div>
-          <button type="submit" class="btn-submit">Submit Registration</button>
-        </form>
+
+      <div class="register-form-wrap">
+        <div class="form-inner">
+          <form action="https://formspree.io/f/xbdpapbk" method="POST">
+            <input type="hidden" name="_subject" value="New Enrollment - Imperial Tech Academy">
+            <div class="form-row">
+              <div class="form-group"><label>Full Name *</label><input type="text" name="name" placeholder="Your full name" required></div>
+              <div class="form-group"><label>Phone Number *</label><input type="tel" name="phone" placeholder="10-digit mobile" required></div>
+            </div>
+            <div class="form-group"><label>Email Address *</label><input type="email" name="email" placeholder="your@email.com" required></div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Course *</label>
+                <select name="course" required>
+                  <option value="">Select Course</option>
+                  <option>AWS</option><option>DevOps</option><option>Linux</option><option>Azure</option>
+                  <option>Oracle</option><option>SQL</option><option>Python</option><option>Java</option>
+                  <option>.NET</option><option>VMware</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Batch Timing</label>
+                <select name="batch">
+                  <option value="">Select Timing</option>
+                  <option>Morning (7AM - 9AM)</option>
+                  <option>Afternoon (1PM - 3PM)</option>
+                  <option>Evening (6PM - 8PM)</option>
+                  <option>Weekend Batch</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group"><label>Message (Optional)</label><textarea name="message" placeholder="Any specific questions..."></textarea></div>
+            <button type="submit" class="btn-enroll"><span>Submit Enrollment &rarr;</span></button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── CREATOR SECTION ── -->
+<!-- CREATOR — COMPACT -->
 <section id="creator">
-  <div class="creator-inner">
-    <span class="creator-tag">◆ Website Created By ◆</span>
-    <div class="creator-card">
-      <div class="creator-avatar">RK</div>
-      <div class="creator-name">Ramakrishna Kudipudi</div>
-      <div class="creator-role">Founder &amp; Web Developer</div>
-      <div class="creator-divider"></div>
-      <a href="https://www.instagram.com/kudipudirk" target="_blank" rel="noopener" class="creator-insta">
-        <div class="insta-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-        </div>
-        <span class="creator-handle">@kudipudirk</span>
-      </a>
-      <p class="creator-note">This website was designed and developed by Ramakrishna Kudipudi.<br>Follow on Instagram for updates and tech content.</p>
+  <div class="creator-strip">
+    <div class="creator-left">
+      <div class="creator-av">RK</div>
+      <div class="creator-info">
+        <span class="creator-tag-sm">Website Created By</span>
+        <div class="creator-nm">Ramakrishna Kudipudi</div>
+      </div>
     </div>
+    <div class="creator-sep"></div>
+    <a href="https://www.instagram.com/kudipudirk" target="_blank" rel="noopener" class="creator-insta">
+      <div class="insta-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+      <span class="creator-handle">@kudipudirk</span>
+    </a>
   </div>
 </section>
 
@@ -652,83 +529,20 @@
   <div class="footer-links">
     <a href="#courses">Courses</a>
     <a href="#why">Why Us</a>
-    <a href="#feedback">Feedback</a>
+    <a href="#founders">Our Team</a>
     <a href="#register">Register</a>
     <a href="#creator">Creator</a>
     <a href="tel:8106454491">Call Us</a>
   </div>
-  <div class="footer-copy">© 2025 Imperial Tech Academy. All rights reserved.</div>
-  <div class="footer-creator">
-    Designed &amp; Developed by <a href="https://www.instagram.com/kudipudirk" target="_blank">Ramakrishna Kudipudi</a>
-    &nbsp;|&nbsp;
-    <a href="https://www.instagram.com/kudipudirk" target="_blank">@kudipudirk</a>
-  </div>
+  <div class="footer-copy">&copy; 2025 Imperial Tech Academy. All rights reserved.</div>
+  <div class="footer-creator">Designed &amp; Developed by <a href="https://www.instagram.com/kudipudirk" target="_blank">Ramakrishna Kudipudi</a></div>
 </footer>
 
 <script>
-let selectedRating = 0;
-document.querySelectorAll('.star').forEach(star => {
-  star.addEventListener('mouseover', function() {
-    const val = +this.dataset.val;
-    document.querySelectorAll('.star').forEach(s => s.classList.toggle('active', +s.dataset.val <= val));
-  });
-  star.addEventListener('mouseout', function() {
-    document.querySelectorAll('.star').forEach(s => s.classList.toggle('active', +s.dataset.val <= selectedRating));
-  });
-  star.addEventListener('click', function() {
-    selectedRating = +this.dataset.val;
-    document.querySelectorAll('.star').forEach(s => s.classList.toggle('active', +s.dataset.val <= selectedRating));
-  });
-});
-
-function submitFeedback() {
-  const name = document.getElementById('fb-name').value.trim();
-  const course = document.getElementById('fb-course').value;
-  const text = document.getElementById('fb-text').value.trim();
-  if (!name || !course || !text || selectedRating === 0) { alert('Please fill in all fields and give a rating.'); return; }
-  const stars = '★'.repeat(selectedRating) + '☆'.repeat(5 - selectedRating);
-  const date = new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
-  const feedbacks = JSON.parse(localStorage.getItem('imperialFeedbacks') || '[]');
-  feedbacks.unshift({ name, course, text, stars, date });
-  localStorage.setItem('imperialFeedbacks', JSON.stringify(feedbacks));
-  addFeedbackToDOM({ name, course, text, stars, date }, true);
-  document.getElementById('fb-name').value = '';
-  document.getElementById('fb-course').value = '';
-  document.getElementById('fb-text').value = '';
-  selectedRating = 0;
-  document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
-  const msg = document.getElementById('fb-success');
-  msg.style.display = 'block';
-  setTimeout(() => msg.style.display = 'none', 4000);
-}
-
-function addFeedbackToDOM(fb, prepend) {
-  const list = document.getElementById('feedback-list');
-  const noFb = list.querySelector('.no-feedback');
-  if (noFb) noFb.remove();
-  const div = document.createElement('div');
-  div.className = 'feedback-item';
-  div.innerHTML = `<div class="fb-header"><span class="fb-name">${escapeHtml(fb.name)}</span><span class="fb-stars">${fb.stars}</span></div><div class="fb-course">${escapeHtml(fb.course)}</div><div class="fb-text">"${escapeHtml(fb.text)}"</div><div class="fb-date">${fb.date}</div>`;
-  if (prepend) list.insertBefore(div, list.firstChild);
-  else list.appendChild(div);
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-window.addEventListener('load', () => {
-  const saved = JSON.parse(localStorage.getItem('imperialFeedbacks') || '[]');
-  saved.forEach(fb => addFeedbackToDOM(fb, false));
-});
-
 function toggleNav() {
   const links = document.querySelector('.nav-links');
-  if (links.style.display === 'flex') {
-    links.style.display = 'none';
-  } else {
-    links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:rgba(13,27,42,0.98);padding:1.5rem 2rem;gap:1.5rem;border-bottom:1px solid rgba(201,168,76,0.25);z-index:998;';
-  }
+  if (links.style.display === 'flex') { links.style.display = 'none'; }
+  else { links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:rgba(13,27,42,0.98);padding:1.5rem 2rem;gap:1.5rem;border-bottom:1px solid rgba(201,168,76,0.25);z-index:998;'; }
 }
 </script>
 </body>
